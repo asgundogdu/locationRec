@@ -11,6 +11,8 @@ from sklearn.metrics import mean_squared_error
 from scipy.sparse.csgraph import minimum_spanning_tree as mst_nsim
 from scipy.sparse.linalg import svds
 
+from .data import preprocess_binary
+
 # Methods
 def compute_rmse(preds, ground_truth):
     grouped = pd.DataFrame({'count' : ground_truth.groupby(['user_nickname','town'])['town'].apply(len)}).reset_index()
@@ -109,6 +111,12 @@ class locationRec(object):
             self.train = pd.read_pickle('train.pckl')
             self.validate = pd.read_pickle('validate.pckl')
             self.test = pd.read_pickle('test.pckl')
+        if preproccesing==2:
+            preprocess_binary()
+            self.user_item_df = pd.read_pickle('User_Item2.pckl')
+            self.train = pd.read_pickle('train2.pckl')
+            self.validate = pd.read_pickle('validate2.pckl')
+            self.test = pd.read_pickle('test2.pckl')
 
 
     def train_model(self, model_type='SVD', latent_dimension=50):
