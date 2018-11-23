@@ -1,8 +1,6 @@
 #!/usr/bin/python
 
-#####################
-#### Imports
-#####################
+# Imports
 
 import pandas as pd
 import numpy as np
@@ -13,10 +11,7 @@ from sklearn.metrics import mean_squared_error
 from scipy.sparse.csgraph import minimum_spanning_tree as mst_nsim
 from scipy.sparse.linalg import svds
 
-# For visualization
-
-
-# Created modules
+# Methods
 def compute_rmse(preds, ground_truth):
     grouped = pd.DataFrame({'count' : ground_truth.groupby(['user_nickname','town'])['town'].apply(len)}).reset_index()
     pred_values = []
@@ -83,9 +78,7 @@ def svd_model(user_item_df, latent_dimension):
     preds = pd.DataFrame(all_user_predicted_checkins, columns = user_item_df.columns, index=user_item_df.index)
     return preds
 
-#####################
-#### Class
-#####################
+# Class
 
 class locationRec(object):
     """DocString"""
