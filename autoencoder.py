@@ -16,11 +16,11 @@ from CF.collaborative_filtering import locationRec
 recmodel = locationRec()
 recmodel.datapipeline(preproccesing=2)
 
-users = recmodel.train.user_nickname.tolist()
+user_nicknames = recmodel.train.user_nickname_nickname.tolist()
 items = recmodel.train.town.tolist()
 num_items = len(set(items))
-num_users = len(set(users))
-print("#Items: {}, #Users: {}".format(num_items, num_users))
+num_user_nicknames = len(set(user_nicknames))
+print("#Items: {}, #user_nicknames: {}".format(num_items, num_user_nicknames))
 
 
 # Network Parameters
@@ -79,7 +79,7 @@ def main():
 	predictions = pd.DataFrame()
 
 
-	matrix = recmodel.user_item_df.values
+	matrix = recmodel.user_nickname_item_df.values
 
 
 	# Initialize the variables (i.e. assign their default value)
@@ -118,6 +118,67 @@ def main():
 	    train_writer.add_summary(summary, i_global)
 
 	    saver.save(session, save_path=save_dir, global_step=i_global)
+
+	    print("Predictions...")
+
+	    matrix = train.values
+	    
+	    preds = session.run(decoder_op, feed_dict={X: matrix})
+
+	    #print(matrix.shape)
+	    #print(preds.shape)
+
+	    predictions = predictions.append(pd.DataFrame(preds))
+
+	    predictions = predictions.stack().reset_index(name='checkins')
+	    predictions.columns = ['user_nickname', 'town', 'checkins']
+	    predictions['user_nickname'] = predictions['user_nickname'].map(lambda value: user_nicknames[value])
+	    predictions['town'] = predictions['town'].map(lambda value: items[value])
+
+	    #print(predictions.shape)
+
+	    print("Filtering out items in training set")
+
+	    keys = ['user_nickname', 'town']
+	    i1 = predictions.set_index(keys).index
+	    i2 = recmodel.user_nickname_item_network_training.CF_data.set_index(keys).index
+
+	    recs = predictions[~i1.isin(i2)]
+	    recs = recs.sort_values(['user_nickname', 'checkins'], ascending=[True, False])
+	    recs = recs.groupby('user_nickname').head(k)
+	    recs.to_csv('recs.tsv', sep='\t', index=False, header=False)
+	    
+	    #recs
+
+	#     test = pd.read_csv(test_data, sep='\t', names=['user_nickname', 'item', 'checkins', 'timestamp'], header=None)
+	#     test = test.drop('timestamp', axis=1)
+	    test = recmodel.user_nickname_item_network_training.CF_data
+	    test = test.sort_values(['user_nickname', 'checkins'], ascending=[True, False])
+
+	    #test = test.groupby('user_nickname').head(k) #.reset_index(drop=True)
+	    #test_list = test.as_matrix(columns=['town']).reshape((-1))
+	    #recs_list = recs.groupby('user_nickname').head(k).as_matrix(columns=['town']).reshape((-1))
+
+	    print("Evaluating...")
+
+	    p = 0.0
+	    for user_nickname in user_nicknames[:10]:
+	        test_list = test[(test.user_nickname == user_nickname)].head(k).as_matrix(columns=['town']).flatten()
+	        recs_list = recs[(recs.user_nickname == user_nickname)].head(k).as_matrix(columns=['town']).flatten()
+
+	        #session.run(pre_op, feed_dict={eval_x: test_list, eval_y: recs_list})
+
+	        pu = precision_score(test_list, recs_list, average='micro')
+	        p += pu
+
+	        print("Precision for user_nickname {}: {}".format(user_nickname, pu))
+	        print("user_nickname test:--\n{}".format([mov_dict[x][1] for x in test_list]))
+	        print("user_nickname recs:--\n{}".format([mov_dict[x][1] for x in recs_list]))
+	        print()
+	    p /= 10#len(user_nicknames)
+
+	    #p = session.run(pre)
+	    print("Precision@{}: {}".format(k, p))
 
 
 if __name__ == '__main__':
