@@ -167,10 +167,10 @@ class locationRec(object):
 
         if data=='val':
             val_user_df = self.validate[self.validate.user_nickname == user]
-            actual_list = val_user_df.user_nickname.tolist()
+            actual_list = val_user_df.town.tolist()
         if data=='test':
             val_user_df = self.test[self.test.user_nickname == user]
-            actual_list = val_user_df.user_nickname.tolist()
+            actual_list = val_user_df.town.tolist()
 
         return recommended_list_sorted, actual_list
 
