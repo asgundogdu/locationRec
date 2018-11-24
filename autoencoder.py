@@ -16,11 +16,11 @@ from CF.collaborative_filtering import locationRec
 recmodel = locationRec()
 recmodel.datapipeline(preproccesing=2)
 
-user_nicknames = recmodel.train.user_nickname.tolist()
+user = recmodel.train.user_nickname.tolist()
 items = recmodel.train.town.tolist()
 num_items = len(set(items))
-num_user_nicknames = len(set(user_nicknames))
-print("#Items: {}, #user_nicknames: {}".format(num_items, num_user_nicknames))
+num_user = len(set(user))
+print("#Items: {}, #user: {}".format(num_items, num_user))
 
 
 # Network Parameters
@@ -79,7 +79,7 @@ def main():
 	predictions = pd.DataFrame()
 
 
-	matrix = recmodel.user_nickname_item_df.values
+	matrix = recmodel.user_item_df.values
 
 
 	# Initialize the variables (i.e. assign their default value)
@@ -141,7 +141,7 @@ def main():
 
 	    keys = ['user_nickname', 'town']
 	    i1 = predictions.set_index(keys).index
-	    i2 = recmodel.user_nickname_item_network_training.CF_data.set_index(keys).index
+	    i2 = recmodel.validate.set_index(keys).index
 
 	    recs = predictions[~i1.isin(i2)]
 	    recs = recs.sort_values(['user_nickname', 'checkins'], ascending=[True, False])
@@ -152,7 +152,7 @@ def main():
 
 	#     test = pd.read_csv(test_data, sep='\t', names=['user_nickname', 'item', 'checkins', 'timestamp'], header=None)
 	#     test = test.drop('timestamp', axis=1)
-	    test = recmodel.user_nickname_item_network_training.CF_data
+	    test = recmodel.test
 	    test = test.sort_values(['user_nickname', 'checkins'], ascending=[True, False])
 
 	    #test = test.groupby('user_nickname').head(k) #.reset_index(drop=True)
@@ -162,18 +162,18 @@ def main():
 	    print("Evaluating...")
 
 	    p = 0.0
-	    for user_nickname in user_nicknames[:10]:
-	        test_list = test[(test.user_nickname == user_nickname)].head(k).as_matrix(columns=['town']).flatten()
-	        recs_list = recs[(recs.user_nickname == user_nickname)].head(k).as_matrix(columns=['town']).flatten()
+	    for user in users[:10]:
+	        test_list = test[(test.user_nickname == user)].head(k).as_matrix(columns=['town']).flatten()
+	        recs_list = recs[(recs.user_nickname == user)].head(k).as_matrix(columns=['town']).flatten()
 
 	        #session.run(pre_op, feed_dict={eval_x: test_list, eval_y: recs_list})
 
 	        pu = precision_score(test_list, recs_list, average='micro')
 	        p += pu
 
-	        print("Precision for user_nickname {}: {}".format(user_nickname, pu))
-	        print("user_nickname test:--\n{}".format([mov_dict[x][1] for x in test_list]))
-	        print("user_nickname recs:--\n{}".format([mov_dict[x][1] for x in recs_list]))
+	        print("Precision for user {}: {}".format(user, pu))
+	        print("user test:--\n{}".format([mov_dict[x][1] for x in test_list]))
+	        print("user recs:--\n{}".format([mov_dict[x][1] for x in recs_list]))
 	        print()
 	    p /= 10#len(user_nicknames)
 
