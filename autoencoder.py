@@ -13,6 +13,22 @@ import tensorflow as tf
 
 from CF.collaborative_filtering import locationRec
 
+recmodel = locationRec()
+recmodel.datapipeline(preproccesing=2)
+
+users = recmodel.train.user_nickname.tolist()
+items = recmodel.train.town.tolist()
+num_items = len(set(items))
+num_users = len(set(users))
+print("#Items: {}, #Users: {}".format(num_items, num_users))
+
+
+# Network Parameters
+epochs = 100
+batch_size = 250
+num_input = num_items   # num of items
+num_hidden_1 = 15       # 1st layer num features
+num_hidden_2 = 10 # 2nd layer num features (the latent dim)
 
 weights = {
     'encoder_h1': tf.Variable(tf.random_normal([num_input, num_hidden_1], dtype=tf.float64)),
@@ -46,23 +62,6 @@ def decoder(x):
 
 
 def main():
-	recmodel = locationRec()
-	recmodel.datapipeline(preproccesing=2)
-
-	users = recmodel.train.user_nickname.tolist()
-	items = recmodel.train.town.tolist()
-	num_items = len(set(items))
-	num_users = len(set(users))
-	print("#Items: {}, #Users: {}".format(num_items, num_users))
-
-
-	# Network Parameters
-	epochs = 100
-	batch_size = 250
-	num_input = num_items   # num of items
-	num_hidden_1 = 15       # 1st layer num features
-	num_hidden_2 = 10 # 2nd layer num features (the latent dim)
-
 
 	X = tf.placeholder(tf.float64, [None, num_input])
 
