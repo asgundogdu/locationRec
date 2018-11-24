@@ -16,7 +16,7 @@ from CF.collaborative_filtering import locationRec
 recmodel = locationRec()
 recmodel.datapipeline(preproccesing=2)
 
-user_nicknames = recmodel.train.user_nickname_nickname.tolist()
+user_nicknames = recmodel.train.user_nickname.tolist()
 items = recmodel.train.town.tolist()
 num_items = len(set(items))
 num_user_nicknames = len(set(user_nicknames))
