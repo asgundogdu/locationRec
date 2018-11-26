@@ -10,3 +10,6 @@ https://plot.ly/javascript/axes/
 
 ## Github Page
 https://asgundogdu.github.io/locationRec/
+
+## Github Repo
+https://github.com/asgundogdu/locationRec
