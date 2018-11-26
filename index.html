@@ -8,8 +8,8 @@
     
     <link href="scripts/libraries/multiple-select.css" rel="stylesheet"/>
       
-    <link rel="stylesheet" href="https://cdn.leafletjs.com/leaflet-0.5/leaflet.css"/> 
-    <script src="https://cdn.leafletjs.com/leaflet-0.5/leaflet-src.js"></script>
+    <link rel="stylesheet" href="script/libraries/leaflet.css"/> 
+    <script src="script/libraries/leaflet-src.js"></script>
     
     <script src="https://d3js.org/d3.v3.min.js"></script>
       
@@ -295,8 +295,8 @@
                   container = L.DomUtil.get('results'),
                   map = L.map(container).setView([40, -96], 4);
 
-              var osmtiles = L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-                  attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a>'
+              var osmtiles = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+                  attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>'
               });
               map.addLayer(osmtiles);
             
