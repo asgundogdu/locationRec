@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>YFCC100M</title>
+      
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
+    
+    <link href="scripts/libraries/multiple-select.css" rel="stylesheet"/>
+      
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5/leaflet.css"/> 
+    <script src="http://cdn.leafletjs.com/leaflet-0.5/leaflet-src.js"></script>
+    
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+      
+    <script src="https://d3js.org/d3-hexbin.v0.2.min.js"></script>
+    <script src="scripts/libraries/colorbrewer.js"></script>
+    <script src="scripts/libraries/leaflet.hexbin-layer.js"></script>
+      
+      <style>
+        .hexagon { opacity: 0.7 }
+
+        svg {
+          font: 9.6px sans-serif;
+        }
+
+        .area, .bar {
+          fill: steelblue;
+          clip-path: url(#clip);
+        } 
+          
+        .axis path,
+        .axis line {
+          fill: none;
+          stroke: none;
+          shape-rendering: crispEdges;
+        }
+          
+        .htchart1 .axis path,
+        .htchart1 .axis line {
+          fill: none;
+          stroke: #000;
+          shape-rendering: crispEdges;
+        }
+
+        .brush .extent {
+          stroke: #fff;
+          fill-opacity: .125;
+          shape-rendering: crispEdges;  
+        }
+
+        .list-group-item  {
+              border: none;
+          }
+          
+        .single, .multiple, .multi {
+            width: 300px;
+        }
+          
+        
+      </style>
+  </head>
+    
+    
+<!--   -----------------------------------------------   -->
+    <body>
+    <div class="col-lg-8" style="padding-top: 10px;">
+        <div class="nav nav-tabs nav-justified"> 
+            <ul class="nav nav-tabs nav-justified" data-tabs="tabs">
+                <li class="active"><a href="#eda-m" data-toggle="tab" onclick="showcontent('eda')">Exploratory Data Analysis</a></li>
+                <li><a href="#ms-m" data-toggle="tab" onclick="showcontent('ms')">Hyperparameter &amp; Model Selection</a></li>
+                <li><a href="#er-m" data-toggle="tab" onclick="showcontent('er')">Evaluation and Results</a></li>
+            </ul>
+<!--   -----------------------------------------------   -->       
+            <div class="tab-content">   
+                <div class="tab-pane active" id="eda-m">
+                    <div id='hex' data-source="data/eda-data.geojson" style="height: 85vh; margin-top: 10px"></div>
+                </div>
+<!--   -----------------------------------------------   -->
+                <div class="tab-pane" id="ms-m">
+                    <div id="ht" style="height: 44vh; width:100%;">
+                    <h4 style="font-family: serif; margin-bottom: 0; padding-top: 10px">Hyperparmeter Testing:</h4>
+                    <hr style="margin-top: 0; margin-bottom: 1px">
+                    <svg class="htchart1" style="height: 100%;"></svg>
+                    <svg class="htchart2" style="height: 100%"></svg>   
+                    <svg class="htchart3" style="height: 100%"></svg>   
+                    </div>
+
+                    <div style="height: 40vh; width:100%;">
+                    <h4 style="font-family: serif; margin-bottom: 0; padding-top: 10px">Model Selection:</h4>
+                    <hr style="margin-top: 0; margin-bottom: 1px">
+                    <div id="mschart" class="mschart" style="height: 100%"></div>
+                    </div>
+                </div>
+<!--   -----------------------------------------------   -->
+                <div class="tab-pane" id="er-m">
+                    <div style="height: 40vh; width:100%;">
+                    <h4 style="font-family: serif; margin-bottom: 0; padding-top: 10px">Evaluation:</h4>
+                    <hr style="margin-top: 0; margin-bottom: 1px">
+                    <div id="evalchart" class="evalchart"></div>
+                    </div>
+                    <div style="height: 44vh; width:100%;">
+                    <h4 style="font-family: serif; margin-bottom: 0; padding-top: 10px" >Result:</h4>
+                    <hr style="margin-top: 0; margin-bottom: 1px">
+                    <div id='results' data-source="data/eda-data.geojson" style="height: 44vh; margin-top: 3px" onclick="fix();"></div>
+                    </div>
+                </div>
+<!--   -----------------------------------------------   -->   
+            </div>
+        </div>
+    </div>
+      
+    <div class="col-lg-4" style="-moz-box-shadow: 0 0 10px 0px #999; -webkit-box-shadow: 0 0 10px 0px #999; height:100vh;">
+        
+        <div id="eda-s">
+            <h4 style="font-family: serif; margin-bottom: 0; padding-top: 10px">Date:</h4>
+            <hr style="margin-top: 0; margin-bottom: 1px">
+            <svg class="datechart" style="width:100%; margin: 10px 0px -30px 0px;"></svg>
+            <h4 style="font-family: serif; margin-bottom: 0; padding-top: 10px">Top 10 Cities:</h4>
+            <hr style="margin-top: 0; margin-bottom: 1px">
+            <svg class="citychart" style="height: 30vh; width:100%; margin: 10px 0px -30px 0px;"></svg>
+        </div>
+<!--   -----------------------------------------------   -->
+        <div id="ms-s">
+            <form action="" method="post" enctype="multipart/form-data" id="form1">
+                <h4 style="font-family: serif; margin-bottom: 0; padding-top: 10px">Preprocessing:</h4>
+                <hr style="margin-top: 0; margin-bottom: 1px">
+                <li class="list-group-item">
+                    <select name="preprocessing" id="preprocessing" class="multiple" multiple="multiple">
+                        <option value="1" selected>1 (# of Check-Ins/Town)</option>
+                        <option value="2" selected>2 (Binary Label)</option>
+                    </select>
+                </li>
+                <h4 style="font-family: serif; margin-bottom: 0; padding-top: 10px">Models:</h4>
+                <hr style="margin-top: 0; margin-bottom: 1px">
+                <li class="list-group-item">
+                <select name="model" id="model" class="multiple" multiple="multiple">
+                    <option value="SVD" selected>SVD</option>
+                    <option value="SVD_implicit">SVD ALS</option>
+                    <option value="Autoencoder" disabled>Autoencoder</option>
+                </select>
+                
+                </li>
+                
+                <h4 style="font-family: serif; margin-bottom: 0; padding-top: 10px">Latent Dimensions:</h4>
+                <hr style="margin-top: 0; margin-bottom: 1px">
+
+                <li class="list-group-item">
+                    <select name="ld" id="ld" class="multi" multiple="multiple">
+                        <option value="10" disabled>10</option>
+                        <option value="20" selected  disabled>20</option>
+                        <option value="30" selected  disabled>30</option>
+                        <option value="40" selected  disabled>40</option>
+                        <option value="50" selected  disabled>50</option>
+                        <option value="60" disabled>60</option>
+                        <option value="70" selected  disabled>70</option>
+                        <option value="80" disabled>80</option>
+                        <option value="90" disabled>90</option>
+                        <option value="100" selected  disabled>100</option>
+                    </select>
+                </li>
+                
+                <h4 style="font-family: serif; margin-bottom: 0; padding-top: 10px">Metric:</h4>
+                <hr style="margin-top: 0; margin-bottom: 1px">
+
+                <li class="list-group-item">
+                    <select name="metric" id="metric" class="single" multiple="multiple">
+                        <option value="rmse_train" disabled>RMSE</option>
+                        <option value="precision_train" selected>Precision@N</option>
+                        <option value="recall_train">Recall</option>
+                    </select>
+                </li>
+                
+                 <li class="list-group-item row">
+                 <input type="submit" value="Train" id="submit" class="btn btn-primary col-lg-4">
+                </li>
+            </form>
+        </div>
+<!--   -----------------------------------------------   -->
+        <div id="er-s">
+            <form action="" method="post" enctype="multipart/form-data" id="form2">
+                <h4 style="font-family: serif; margin-bottom: 0; padding-top: 10px">Evaluation:</h4>
+                <hr style="margin-top: 0; margin-bottom: 1px">
+
+                <li class="list-group-item row">
+                    <label class="col-lg-4">Preprocessing:</label>
+                    <select name="fpreprocessing" id="fpreprocessing" class="single" multiple="multiple">
+                        <option value="1" selected>1 (# of Check-Ins/Town)</option>
+                        <option value="2">2 (Binary Label)</option>
+                    </select>
+                </li>
+
+                <li class="list-group-item row">
+                <label class="col-lg-4">Model:</label>
+                <select name="fmodel" id="fmodel" class="single" multiple="multiple">
+                    <option value="SVD" selected>SVD</option>
+                    <option value="SVD_implicit">SVD ALS</option>
+                    <option value="Autoencoder" disabled>Autoencoder</option>
+                </select>
+                
+                </li>
+                
+                <li class="list-group-item row">
+                    <label class="col-lg-4">Latent Dimensions:</label>
+                    <select name="fld" id="fld" class="single" multiple="multiple">
+                        <option value="10" selected>10</option>
+                        <option value="20">20</option>
+                        <option value="30">30</option>
+                        <option value="40">40</option>
+                        <option value="50">50</option>
+                        <option value="60">60</option>
+                        <option value="70">70</option>
+                        <option value="80">80</option>
+                        <option value="90">90</option>
+                        <option value="100">100</option>
+                    </select>
+                </li>
+                <li class="list-group-item row">
+                 <input type="submit" value="Train" id="fsubmit" class="btn btn-primary col-lg-4" style="margin-left: 10px;">
+                </li>
+            </form>
+            <hr>
+            <h4 style="font-family: serif; margin-bottom: 0; padding-top: 10px">Ranked List of Results:</h4>
+                <hr style="margin-top: 0; margin-bottom: 1px">
+            <form action="" method="post" enctype="multipart/form-data" id="form3" >
+            <li class="list-group-item row">
+              <label class="col-lg-4">User:</label>
+              <select id="user" name="user" class="form-control form-control-sm" style="width:65%; float:left; display: block margin: auto">
+                <option value="None" selected="selected">--User--</option>
+            </select>
+            </li>
+            </form>
+        </div>
+        
+    </div>
+
+</body>
+<!--   -----------------------------------------------   -->
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="scripts/libraries/multiple-select.js"></script>
+    
+    <script>
+        $('.multiple').multipleSelect();
+
+        $(".single").multipleSelect({
+            single: true
+        });
+        
+        $(".multi").multipleSelect({
+            multiple: true,
+            multipleWidth: 100
+        });
+        
+    </script>
+    
+    <script>
+    var eda = document.getElementById("eda-s");
+    var ms = document.getElementById("ms-s");
+    var er = document.getElementById("er-s");
+        
+    ms.style.display="none";
+    er.style.display="none";
+        
+    var showcontent = function(flag) {
+        
+        if(flag=="eda"){
+            eda.style.display="block";
+            ms.style.display="none";
+            er.style.display="none";
+        }
+        if(flag=="ms"){
+            eda.style.display="none";
+            ms.style.display="block";
+            er.style.display="none";
+        }
+        if(flag=="er"){
+            eda.style.display="none";
+            ms.style.display="none";
+            er.style.display="block";
+        }
+        
+    } 
+    </script>
+
+    <script src="scripts/eda.js"></script>
+    <script src="scripts/ms.js"></script>
+    
+    <script>
+              var max, scale,
+                  classes = 9,
+                  scheme = colorbrewer["YlOrRd"][classes],
+                  container = L.DomUtil.get('results'),
+                  map = L.map(container).setView([40, -96], 4);
+
+              var osmtiles = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+                  attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>'
+              });
+              map.addLayer(osmtiles);
+            
+                var fix = function(){
+                    map.invalidateSize();
+                }
+            
+              d3.json(container.dataset.source, function(collection) {
+                  
+                    var users = [];
+                    var noc = {};
+                    collection.features.forEach(function(d, i) {
+                    noc[d.properties.user_nickname] = (noc[d.properties.user_nickname] || 0) + 1;
+                    });
+
+                    for (var n in noc) {
+                      if (noc.hasOwnProperty(n)) {
+                        users.push({
+                          user: n,
+                          freq: noc[n]
+                        });
+                      }
+                    } 
+                  
+                  users = users.sort((a, b) => parseFloat(b.freq) - parseFloat(a.freq)).slice(0, 10);
+                  
+                  d3.select('#user')
+                  .attr("name", "name-list")
+                     .selectAll("option")
+                    .data(users).enter()
+                    .append("option")
+                     .text(function(d) {
+                         return d.user+": "+d.freq;
+                      })
+                      .attr("value", function(d) {
+                        return d.user;
+                        });
+                  
+                  
+//                  var addmarkers = function(){
+//                      var fcollection=collection.features.filter(function(i){
+//                        return i.properties.user_nickname==this.value;         
+//                    });
+//                      for (var i = 0; i < fcollection.features.length; i++) {
+//                    marker = new L.marker([fcollection.features.properties.longitude[i],fcollection.features.properties.latitude[i]])
+//                        .bindPopup(fcollection.features.properties[i])
+//                        .addTo(map);
+//                  }
+//                document.getElementById("user").onchange = addmarkers;
+                  
+//		}
+                  
+              });
+        
+        
+                d3.json("data/er-data.json", function(data) {
+                  
+                    var towns = [];
+                    var T = [];
+                    var F = [];
+                    
+                    data.map(function(d) {
+                            towns.push(d.town);
+                            T.push(d.T);
+                            F.push(d.F);
+                        });
+                    
+                    var trace1 = {
+                      x: towns,
+                      y: T,
+                      name: 'True',
+                      type: 'bar'
+                    };
+
+                    var trace2 = {
+                      x: towns,
+                      y: F,
+                      name: 'False',
+                      type: 'bar'
+                    };
+
+                    var data = [trace1, trace2];
+
+                    var layout = {barmode: 'stack', width: 982, height: 265, margin: {l: 30,r: 0,b: 20,t: 0,pad: 0}, xaxis: {
+                                                        title: 'Towns',
+                                                        titlefont: {
+                                                          family: 'Arial, sans-serif',
+                                                          size: 10
+                                                        },
+                                                        showticklabels: false
+                                                            },
+                                                    yaxis: {
+                                                        title: 'Count',
+                                                        titlefont: {
+                                                          family: 'Arial, sans-serif',
+                                                          size: 10
+                                                        },
+                                                        showticklabels: false
+                                                            }};
+
+                    Plotly.newPlot('evalchart', data, layout);
+                  
+              });
+    </script>
+    
+
+</html>

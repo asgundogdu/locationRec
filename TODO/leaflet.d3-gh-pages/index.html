@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>D3!</title>
+<link rel="stylesheet" href="leaflet/leaflet.css" />
+<link rel="stylesheet" href="css/colorbrewer.css" />
+<style>
+
+html { height: 100% }
+body { height: 100%; margin: 0; padding: 0;}
+#map{ height: 100% }
+
+.town { 
+	stroke-width : 0;
+	fill: #000;
+	fill-opacity: .6;
+	stroke: #fff; 
+}
+
+.town:hover {
+  fill: rgb(109, 28, 28);
+  fill-opacity: .7;
+  cursor:pointer;
+}
+
+</style>
+
+
+<script src="leaflet/leaflet-src.js"></script>
+    </head>
+<div id="map"></div>
+
+<script src="js/d3.v3.js"></script>
+<script src="js/topojson.v0.js"></script>
+<script src="leaflet.d3.js"></script>
+<script>
+var m = L.map("map").setView([42.08, -71.64],8);
+
+var stamenAttribution = 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; ' +
+		  'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>';
+		  
+var tiles = L.layerGroup(
+	[
+		L.tileLayer(
+			"http://{s}.tile.stamen.com/terrain-background/{z}/{x}/{y}.jpg",
+			{
+				minZoom:4,
+				maxZoom:18
+			}
+		),
+		L.tileLayer(
+			"http://{s}.tile.stamen.com/terrain-lines/{z}/{x}/{y}.png",
+			{
+				minZoom:4,
+				maxZoom:12,
+				attribution:stamenAttribution
+			}
+		)
+	]
+).addTo(m);
+
+var topo=L.d3("json/ma.topo.json",{
+	topojson:"TOWNS",
+	svgClass : "Spectral",
+	pathClass:function(d) {
+		return "town q" + (10-topo.quintile(d.properties.pop/topo.path.area(d)))+"-11";
+	},
+	before: function(data){
+		var _this = this;
+		this.quintile=d3.scale.quantile().domain(data.geometries.map(function(d){return d.properties.pop/_this.path.area(d);})).range(d3.range(11));
+	}
+}).addTo(m);
+
+topo.bindPopup(function(p){
+	var out =[];
+	for(var key in p){
+	if(key !== "FOURCOLOR"){
+		out.push("<strong>"+key+"</strong>: "+p[key]);
+		}
+	}
+	return out.join("<br/>");
+	});
+var stamenWaterColor = L.tileLayer(
+	'http://{s}.tile.stamen.com/watercolor/{z}/{x}/{y}.jpg',
+	{
+		minZoom: 3,
+		maxZoom: 16,
+		attribution:stamenAttribution
+	}
+);
+
+ L.control.layers({"Stamen Terrain":tiles,"Stamen Watercolors":stamenWaterColor},{"Towns (topojson)":topo},{collapsed:false}).addTo(m);   
+	
+
+</script>
+
+</html>
