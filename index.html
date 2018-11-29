@@ -8,7 +8,7 @@
     
     <link href="scripts/libraries/multiple-select.css" rel="stylesheet"/>
       
-    <link rel="stylesheet" href="scripts/libraries/leaflet.css"/> 
+    <link href="scripts/libraries/leaflet.css" rel="stylesheet" /> 
     <script src="scripts/libraries/leaflet-src.js"></script>
     
     <script src="https://d3js.org/d3.v3.min.js"></script>
@@ -78,15 +78,13 @@
                 </div>
 <!--   -----------------------------------------------   -->
                 <div class="tab-pane" id="ms-m">
-                    <div id="ht" style="height: 44vh; width:100%;">
+                    <div id="ht" style="height: 40vh; width:100%;">
                     <h4 style="font-family: serif; margin-bottom: 0; padding-top: 10px">Hyperparmeter Testing:</h4>
                     <hr style="margin-top: 0; margin-bottom: 1px">
-                    <svg class="htchart1" style="height: 100%;"></svg>
-                    <svg class="htchart2" style="height: 100%"></svg>   
-                    <svg class="htchart3" style="height: 100%"></svg>   
+                    <div id="htchart" class="htchart" style="height: 100%"></div>
                     </div>
 
-                    <div style="height: 40vh; width:100%;">
+                    <div style="height: 40vh; width:100%; margin-top: 4vh">
                     <h4 style="font-family: serif; margin-bottom: 0; padding-top: 10px">Model Selection:</h4>
                     <hr style="margin-top: 0; margin-bottom: 1px">
                     <div id="mschart" class="mschart" style="height: 100%"></div>
@@ -100,9 +98,16 @@
                     <div id="evalchart" class="evalchart"></div>
                     </div>
                     <div style="height: 44vh; width:100%;">
-                    <h4 style="font-family: serif; margin-bottom: 0; padding-top: 10px" >Result:</h4>
+                    <h4 style="font-family: serif; margin-bottom: 0; padding-top: 10px" >Results:</h4>
                     <hr style="margin-top: 0; margin-bottom: 1px">
-                    <div id='results' data-source="data/eda-data.geojson" style="height: 44vh; margin-top: 3px" onclick="fix();"></div>
+                    <div class="col-lg-6">
+                        <h6 style="font-family: serif; margin-bottom: 0; padding-top: 10px" >Places been:</h6>    
+                    <div id='results1'></div>
+                    </div> 
+                    <div class="col-lg-6">
+                        <h6 style="font-family: serif; margin-bottom: 0; padding-top: 10px" >Recommendations:</h6> 
+                    <div id='results2'></div>   
+                    </div>
                     </div>
                 </div>
 <!--   -----------------------------------------------   -->   
@@ -127,16 +132,16 @@
                 <hr style="margin-top: 0; margin-bottom: 1px">
                 <li class="list-group-item">
                     <select name="preprocessing" id="preprocessing" class="multiple" multiple="multiple">
-                        <option value="1" selected>1 (# of Check-Ins/Town)</option>
-                        <option value="2" selected>2 (Binary Label)</option>
+                        <option value="Numeric" selected>Numeric</option>
+                        <option value="Binary" selected>Binary</option>
                     </select>
                 </li>
                 <h4 style="font-family: serif; margin-bottom: 0; padding-top: 10px">Models:</h4>
                 <hr style="margin-top: 0; margin-bottom: 1px">
                 <li class="list-group-item">
                 <select name="model" id="model" class="multiple" multiple="multiple">
-                    <option value="SVD" selected>SVD</option>
-                    <option value="SVD_implicit">SVD ALS</option>
+                    <option value="SVD_explicit" selected>SVD_explicit</option>
+                    <option value="SVD_implicit">SVD_implicit</option>
                     <option value="Autoencoder" disabled>Autoencoder</option>
                 </select>
                 
@@ -148,15 +153,15 @@
                 <li class="list-group-item">
                     <select name="ld" id="ld" class="multi" multiple="multiple">
                         <option value="10" disabled>10</option>
-                        <option value="20" selected  disabled>20</option>
-                        <option value="30" selected  disabled>30</option>
-                        <option value="40" selected  disabled>40</option>
-                        <option value="50" selected  disabled>50</option>
+                        <option value="20" selected>20</option>
+                        <option value="30" selected>30</option>
+                        <option value="40" selected>40</option>
+                        <option value="50" selected>50</option>
                         <option value="60" disabled>60</option>
-                        <option value="70" selected  disabled>70</option>
+                        <option value="70" selected>70</option>
                         <option value="80" disabled>80</option>
                         <option value="90" disabled>90</option>
-                        <option value="100" selected  disabled>100</option>
+                        <option value="100" selected>100</option>
                     </select>
                 </li>
                 
@@ -185,16 +190,16 @@
                 <li class="list-group-item row">
                     <label class="col-lg-4">Preprocessing:</label>
                     <select name="fpreprocessing" id="fpreprocessing" class="single" multiple="multiple">
-                        <option value="1" selected>1 (# of Check-Ins/Town)</option>
-                        <option value="2">2 (Binary Label)</option>
+                        <option value="Numeric" selected>Numeric</option>
+                        <option value="Binary">Binary</option>
                     </select>
                 </li>
 
                 <li class="list-group-item row">
                 <label class="col-lg-4">Model:</label>
                 <select name="fmodel" id="fmodel" class="single" multiple="multiple">
-                    <option value="SVD" selected>SVD</option>
-                    <option value="SVD_implicit">SVD ALS</option>
+                    <option value="SVD_explicit" selected>SVD_explicit</option>
+                    <option value="SVD_implicit">SVD_implicit</option>
                     <option value="Autoencoder" disabled>Autoencoder</option>
                 </select>
                 
@@ -289,70 +294,24 @@
     <script src="scripts/ms.js"></script>
     
     <script>
-              var max, scale,
-                  classes = 9,
-                  scheme = colorbrewer["YlOrRd"][classes],
-                  container = L.DomUtil.get('results'),
-                  map = L.map(container).setView([40, -96], 4);
-
-              var osmtiles = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-                  attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>'
-              });
-              map.addLayer(osmtiles);
-            
-                var fix = function(){
-                    map.invalidateSize();
-                }
-            
-              d3.json(container.dataset.source, function(collection) {
-                  
-                    var users = [];
-                    var noc = {};
-                    collection.features.forEach(function(d, i) {
-                    noc[d.properties.user_nickname] = (noc[d.properties.user_nickname] || 0) + 1;
-                    });
-
-                    for (var n in noc) {
-                      if (noc.hasOwnProperty(n)) {
-                        users.push({
-                          user: n,
-                          freq: noc[n]
-                        });
-                      }
-                    } 
-                  
-                  users = users.sort((a, b) => parseFloat(b.freq) - parseFloat(a.freq)).slice(0, 10);
-                  
-                  d3.select('#user')
-                  .attr("name", "name-list")
-                     .selectAll("option")
-                    .data(users).enter()
-                    .append("option")
-                     .text(function(d) {
-                         return d.user+": "+d.freq;
-                      })
-                      .attr("value", function(d) {
-                        return d.user;
-                        });
-                  
-                  
-//                  var addmarkers = function(){
-//                      var fcollection=collection.features.filter(function(i){
-//                        return i.properties.user_nickname==this.value;         
-//                    });
-//                      for (var i = 0; i < fcollection.features.length; i++) {
-//                    marker = new L.marker([fcollection.features.properties.longitude[i],fcollection.features.properties.latitude[i]])
-//                        .bindPopup(fcollection.features.properties[i])
-//                        .addTo(map);
-//                  }
-//                document.getElementById("user").onchange = addmarkers;
-                  
-//		}
-                  
-              });
         
-        
-                d3.json("data/er-data.json", function(data) {
+        var form=document.getElementById("form2");
+            form.onsubmit = function (e) {
+                e.preventDefault();
+            update2()
+
+            }
+
+        var update2 = function() {
+
+            var pval = $('#fpreprocessing').val();
+        //    console.log(pval);
+            var mval = $('#fmodel').val();
+        //    console.log(mval);
+            var ldval = $('#fld').val();
+        //    console.log(ldval);
+            
+            d3.json("data/er-data.json", function(data) {
                   
                     var towns = [];
                     var T = [];
@@ -380,7 +339,7 @@
 
                     var data = [trace1, trace2];
 
-                    var layout = {barmode: 'stack', width: 982, height: 265, margin: {l: 30,r: 0,b: 20,t: 0,pad: 0}, xaxis: {
+                    var layout = {barmode: 'stack', width: 982, height: 265, margin: {l: 40,r: 40,b: 30,t: 10,pad: 0}, xaxis: {
                                                         title: 'Towns',
                                                         titlefont: {
                                                           family: 'Arial, sans-serif',
@@ -400,6 +359,92 @@
                     Plotly.newPlot('evalchart', data, layout);
                   
               });
+        
+        }
+            
+              d3.json('data/eda-data.geojson', function(collection) {
+                  
+                    var users = [];
+                    var noc = {};
+                    collection.features.forEach(function(d, i) {
+                    noc[d.properties.user_nickname] = (noc[d.properties.user_nickname] || 0) + 1;
+                    });
+
+                    for (var n in noc) {
+                      if (noc.hasOwnProperty(n)) {
+                        users.push({
+                          user: n,
+                          freq: noc[n]
+                        });
+                      }
+                    } 
+                  
+                  users = users.sort((a, b) => parseFloat(b.freq) - parseFloat(a.freq)).slice(0, 10);
+                  
+                  d3.select('#user')
+                    .attr("name", "name-list")
+                    .selectAll("option")
+                    .data(users).enter()
+                    .append("option")
+                    .text(function(d) {
+                         return d.user+": "+d.freq;
+                      })
+                    .attr("value", function(d) {
+                        return d.user;
+                        });
+                  
+                  
+                  
+                  $('#user').on('change', function() {
+                      user = this.value;
+
+                    var ffeatures=collection.features.filter(function(i){
+                            return ($.inArray(i.properties.user_nickname, [user]) != -1 );
+                        });
+                      
+                  var lats = [];
+                  var lons = [];   
+                    ffeatures.map(function(d) {
+                            lats.push(d.properties.latitude);
+                            lons.push(d.properties.longitude);
+                        });
+                      
+                   trace = {
+                          lat: lats, 
+                          lon: lons, 
+                          locationmode: 'USA-states', 
+                          type: 'scattergeo'
+                        };
+                      
+                        data = [trace];
+                      
+                        layout = {width: 400, height: 235, margin: {l: 0,r: 0,b: 0,t: 0,pad: 0},
+                          geo: {
+                            countrycolor: 'rgb(217, 217, 217)', 
+                            countrywidth: 0.5, 
+                            landcolor: 'rgb(250, 250, 250)', 
+                            projection: {type: 'albers usa'}, 
+                            scope: 'usa', 
+                            showland: true, 
+                            subunitcolor: 'rgb(217, 217, 217)', 
+                            subunitwidth: 0.5
+                          }
+                        };
+                        Plotly.plot('results1', {
+                          data: data,
+                          layout: layout
+                        });  
+                      Plotly.plot('results2', {
+                          data: data,
+                          layout: layout
+                        });  
+                      
+                      
+                    });
+              });
+        
+        
+                
     </script>
     
 

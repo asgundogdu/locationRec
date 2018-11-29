@@ -1,7 +1,7 @@
 (function () {
               var max, scale,
                   classes = 9,
-                  scheme = colorbrewer["YlOrRd"][classes],
+                  scheme = colorbrewer["GnBu"][classes],
                   container = L.DomUtil.get('hex'),
                   map = L.map(container).setView([40, -96], 4);
 
@@ -101,13 +101,13 @@
 
                 function brushed() {
                     var s = brush.extent();
-                    var fcollection=collection.features.filter(function(i){
+                    var ffeatures=collection.features.filter(function(i){
                         return parseDate(i.properties.date)>=s[0]&& parseDate(i.properties.date)<= s[1];         
                     });
 
                     var ucitydata = [];
                     var noc = {};
-                    fcollection.forEach(function(d, i) {
+                    ffeatures.forEach(function(d, i) {
                     noc[d.properties.town] = (noc[d.properties.town] || 0) + 1;
                     });
 
@@ -171,11 +171,31 @@
                             return d.freq;
                         })
                         .style("fill", "white");
+                    
+                    map.getContainer().remove();
+//                    console.log(old)
+                    $('<div id="hex" data-source="data/eda-data.geojson" style="height: 85vh; margin-top: 10px"></div>').appendTo($('#eda-m'));
 
-//                        delete map._layers[16];
-//                        console.log(map);
-//                   map.removeLayer(osmtiles);
-    //                    TODO: add linking
+                    var max, scale,
+                      classes = 9,
+                      scheme = colorbrewer["GnBu"][classes],
+                      container = L.DomUtil.get('hex');
+                    
+                      map = L.map(container).setView([40, -96], 4);
+
+                  var osmtiles = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+                      attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>'
+                  });
+                  map.addLayer(osmtiles);
+                    
+                d3.json('data/eda-data.geojson', function(fcollection) {
+//                  
+                    hexlay = L.hexLayer(fcollection, {
+                          applyStyle: hex_style
+                    });
+//
+                    map.addLayer(hexlay);
+                    });
                   }
 
               function type(d) {
