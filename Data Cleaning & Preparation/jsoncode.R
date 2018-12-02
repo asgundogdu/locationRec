@@ -21,8 +21,11 @@ geojson_write(sample, lat = "latitude", lon = "longitude", file = "project/data/
 # mapview::mapview(sample, zcol='state', pal='Set1')
 
 ht <- read_csv("ht-data.csv")
-
-write(jsonlite::toJSON(ht), file = "project/data/ht-data.json")
+ht <- ht %>%
+  mutate(Preprocessing = ifelse(Preprocessing=="1", "Numeric", 'Binary')
+         )
+ht[c(4:9)]=round(ht[c(4:9)], digits=2)
+write(jsonlite::toJSON(ht), file = "YFCC-USA-Town-Recommendation/data/ht-data.json")
 
 sample$eval <- sample(c("F","T"), replace=TRUE, size=nrow(sample))
 
@@ -33,3 +36,4 @@ erdata <- toJSON(na.omit(sample %>%
     arrange(desc(`T`)))[1:1000,])
 
 write(erdata, file = "project/data/er-data.json")
+
