@@ -1,0 +1,35 @@
+ Color scale tools
+
+Hi all,
+
+ 
+
+I recently did another look through of tools for helping you create good color scales for your visualizations. Please please please make sure to follow recommended practices with your color scales in the projects! 
+
+ 
+
+Get it right in black and white: Make sure lightness corresponds to the quantitative value encoded and that it scales linearly, both for sequential and diverging scales.
+
+ 
+
+Lightness constancy: Make sure that categorical colors have the same lightness values even with different hues so that some don't pop more than others.
+
+ 
+
+    Get a list of colors from an image: https://html-color.codes/color-from-image
+    Analyze your palette: https://projects.susielu.com/viz-palette
+    Analyze the name similarity of colors in your palette: http://vis.stanford.edu/color-names/analyzer/
+    Details on multi-hued color scales: https://www.vis4.net/blog/2013/09/mastering-multi-hued-color-scales/#combining-bezier-interpolation-and-lightness-correction
+    Easy picking a multi-hued color scale: http://tristen.ca/hcl-picker/
+    Easily correcting lightness for a scale: http://gka.github.io/palettes/
+    Do a ton programatically: https://gka.github.io/chroma.js/
+    virdis colors: https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html
+    Simulate color blindness: https://www.color-blindness.com/coblis-color-blindness-simulator/
+    Another palette generator: http://vrl.cs.brown.edu/color
+    Oldie but goodie: http://colorbrewer2.org/
+    Adding legends: https://d3-legend.susielu.com/
+    Adding annotations: https://d3-annotation.susielu.com/ (edi
+
+
+otherproject
+Updated 2 minutes ago by Cody Dunne

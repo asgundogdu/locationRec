@@ -1,3 +1,4 @@
+
 var form=document.getElementById("form1");
     form.onsubmit = function (e) {
         e.preventDefault();
@@ -128,7 +129,16 @@ var update1 = function() {
          
         Plotly.newPlot('htchart', ht_traces, ht_layout);
         Plotly.newPlot('mschart', ms_traces, ms_layout);
-        document.getElementsByClassName('xtitle')[0].x.baseVal[0].value *= 1.1
-
-    });     
+        
+        
+        var best = data.sort((a, b) => parseFloat(b[mt[0]]) - parseFloat(a[mt[0]]))[0];
+        
+        $("#bpreprocessing").text(String(best.Preprocessing));
+        $("#bmodel").text(String(best.Model));
+        $("#bld").text(String(best.LatentDimensions));
+        
+    });   
+    
+          
+        
 }
