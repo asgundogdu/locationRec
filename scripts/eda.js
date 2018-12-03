@@ -18,7 +18,7 @@
                 });
                 map.addLayer(osmtiles);  
                 map.addLayer(hexlay);
-                $('.loading').hide();
+                $('#loader1').hide();
                   
                 var datedata = [];
                 var noc = {};
@@ -106,7 +106,7 @@
                     var s = brush.extent();
                     
                     
-                    $('.loading').show();
+                    $('#loader1').show();
                     if(s[1]-s[0]>0){    
                     var ffeatures=collection.features.filter(function(i){
                         return parseDate(i.properties.date)>=s[0]&& parseDate(i.properties.date)<= s[1];         
@@ -208,7 +208,7 @@
                     
                     map.addLayer(osmtiles);
                     map.addLayer(fhexlay);
-                    $('.loading').hide();
+                    $('#loader1').hide();
 
                 }
 

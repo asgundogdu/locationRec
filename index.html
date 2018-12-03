@@ -96,7 +96,7 @@
         position: absolute;
         height: 100%;
         width: 100%;
-        z-index: 1;
+        z-index: 3;
     }
         #rl ul {
             list-style-type: none;
@@ -132,12 +132,13 @@
 <!--   -----------------------------------------------   -->       
             <div class="tab-content">   
                 <div class="tab-pane active" id="eda-m">
-                    <div class="loading"></div>
+                    <div class="loading" id="loader1"></div>
                     <div id="legend"></div>
                     <div id='hex' data-source="data/eda-data.geojson" style="height: 85vh; margin-top: 10px"></div>
                 </div>
 <!--   -----------------------------------------------   -->
                 <div class="tab-pane" id="ms-m">
+                    <div class="loading" id="loader2"></div>
                     <div id="ht" style="height: 40vh; width:100%;">
                     <h4 style="font-family: serif; margin-bottom: 0; padding-top: 10px">Hyperparmeter Testing:</h4>
                     <hr style="margin-top: 0; margin-bottom: 1px">
@@ -152,6 +153,7 @@
                     </div>
                 </div>
 <!--   -----------------------------------------------   -->
+<!--
                 <div class="tab-pane" id="er-m">
                     <div style="height: 40vh; width:100%;">
                     <h4 style="font-family: serif; margin-bottom: 0; padding-top: 10px">Evaluation:</h4>
@@ -170,6 +172,11 @@
                     <div id='results2'></div>   
                     </div>
                     </div>
+                </div>
+-->
+                <div class="tab-pane" id="er-m">
+<!--                    <div class="loading" id="loader3"></div>-->
+                    <div id='results' style="height: 85vh; margin-top: 10px"></div>
                 </div>
 <!--   -----------------------------------------------   -->   
             </div>
@@ -193,52 +200,52 @@
         <div id="ms-s">
             
             <h4 style="font-family: serif; margin-bottom: 0; padding-top: 10px">Hyperparameter &amp; Model Selection:</h4>
-                <h6>  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sit amet tempus nulla. Donec sollicitudin arcu ut sapien tincidunt lacinia. Mauris pulvinar tempus ligula vel pulvinar. Etiam eros arcu, malesuada quis sapien nec, ornare dignissim dui. Vestibulum mauris dolor, lobortis ut lobortis id, vulputate id turpis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Proin sit amet mauris sed ipsum aliquam consequat.
-
-Duis et sagittis mauris. Cras ut ante fringilla, rhoncus nisl tincidunt, suscipit neque. Aenean dapibus, dui et fringilla blandit, nulla ante suscipit quam, nec accumsan lorem orci vel sem. Donec varius consectetur metus, a ullamcorper leo facilisis rutrum. Phasellus finibus justo vel pharetra interdum. Praesent pharetra varius sem nec tempus. Pellentesque eu viverra turpis, in efficitur elit. Donec quam dolor, tempus aliquet congue quis, feugiat vitae elit. Integer nec purus placerat, porta enim sed, volutpat dolor. Sed vel velit volutpat, placerat justo ac, vestibulum lorem. 
+                <h6>  We give the user the freedom to assess and visualize different adaptations of SVD algorithm on his/her selection of hyperparameters.
+                    We have the following options for Hyperparameter Testing and Model Selection: <br><br>
+                    <b>Preprocessing:</b> 1.Numeric: Count the number of check-ins for each city per user, this creates a numeric label in domain [0, inf). 2.Binary: Label User-Location pair as 1 if user has checked-in in that city, otherwise 0.
+                    <b>Models:</b> 1.SVD_explicit: Use Singular Value Decomposition to extract user and location features and approximate the missing user check-ins by matrix factorization. 2.SVD_implicit: Use Singular Value Decomposition to extract user and location features and then applying Alternating Least Square method to get an optimal fit for missing points. <b>Latent Dimensions:</b> Denotes the number of dimensions/features to extract for each user and location. <b>Metric:</b> Metric to assess the hyperparameters on.
                 </h6>
             <h4 style="font-family: serif; margin-bottom: 0; padding-top: 10px">Experimentation Parameters:</h4>
                 <hr style="margin-top: 0; margin-bottom: 1px">
             <form action="" method="post" enctype="multipart/form-data" id="form1">
                 <li class="list-group-item row">
                     <label class="col-lg-4">Preprocessing:</label>
-                    <select name="preprocessing" id="preprocessing" class="multiple" multiple="multiple">
+                    <select name="preprocessing" id="preprocessing" class="multiple" multiple="multiple" required>
                         <option value="Numeric" selected>Numeric</option>
                         <option value="Binary" selected>Binary</option>
                     </select>
                 </li>
                 <li class="list-group-item row">
                 <label class="col-lg-4">Model:</label>
-                <select name="model" id="model" class="multiple" multiple="multiple">
+                <select name="model" id="model" class="multiple" multiple="multiple" required>
                     <option value="SVD_explicit" selected>SVD_explicit</option>
                     <option value="SVD_implicit">SVD_implicit</option>
-                    <option value="Autoencoder" disabled>Autoencoder</option>
                 </select>
                 
                 </li>
 
                 <li class="list-group-item row">
                     <label class="col-lg-4">Latent Dimensions:</label>
-                    <select name="ld" id="ld" class="multicol" multiple="multiple">
-                        <option value="10" disabled>10</option>
+                    <select name="ld" id="ld" class="multicol" multiple="multiple" required>
+                        <option value="10">10</option>
                         <option value="20" selected>20</option>
                         <option value="30" selected>30</option>
                         <option value="40" selected>40</option>
                         <option value="50" selected>50</option>
-                        <option value="60" disabled>60</option>
+                        <option value="60">60</option>
                         <option value="70" selected>70</option>
-                        <option value="80" disabled>80</option>
-                        <option value="90" disabled>90</option>
+                        <option value="80">80</option>
+                        <option value="90">90</option>
                         <option value="100" selected>100</option>
                     </select>
                 </li>
 
                 <li class="list-group-item row">
                     <label class="col-lg-4">Metric:</label>
-                    <select name="metric" id="metric" class="single" multiple="multiple">
+                    <select name="metric" id="metric" class="single" multiple="multiple" required>
                         <option value="precision_train" selected>Precision-Train Set</option>
                         <option value="recall_train">Recall-Train Set</option>
-                        <option value="precision_val" selected>Precision-Validation Set</option>
+                        <option value="precision_val">Precision-Validation Set</option>
                         <option value="recall_val">Recall-Validation Set</option>
                         <option value="rmse_train">RMSE-Train Set</option>
                         <option value="rmse_val">RMSE-Validation Set</option>
@@ -278,7 +285,7 @@ Duis et sagittis mauris. Cras ut ante fringilla, rhoncus nisl tincidunt, suscipi
 
                 <li class="list-group-item row">
                     <label class="col-lg-4">Preprocessing:</label>
-                    <select name="fpreprocessing" id="fpreprocessing" class="single" multiple="multiple">
+                    <select name="fpreprocessing" id="fpreprocessing" class="single" multiple="multiple" required>
                         <option value="Numeric" selected>Numeric</option>
                         <option value="Binary">Binary</option>
                     </select>
@@ -286,17 +293,16 @@ Duis et sagittis mauris. Cras ut ante fringilla, rhoncus nisl tincidunt, suscipi
 
                 <li class="list-group-item row">
                 <label class="col-lg-4">Model:</label>
-                <select name="fmodel" id="fmodel" class="single" multiple="multiple">
+                <select name="fmodel" id="fmodel" class="single" multiple="multiple" required>
                     <option value="SVD_explicit" selected>SVD_explicit</option>
                     <option value="SVD_implicit">SVD_implicit</option>
-                    <option value="Autoencoder" disabled>Autoencoder</option>
                 </select>
                 
                 </li>
                 
                 <li class="list-group-item row">
                     <label class="col-lg-4">Latent Dimensions:</label>
-                    <select name="fld" id="fld" class="single" multiple="multiple">
+                    <select name="fld" id="fld" class="single" multiple="multiple" required>
                         <option value="10" selected>10</option>
                         <option value="20">20</option>
                         <option value="30">30</option>
@@ -382,7 +388,7 @@ Duis et sagittis mauris. Cras ut ante fringilla, rhoncus nisl tincidunt, suscipi
             eda.style.display="none";
             ms.style.display="none";
             er.style.display="block";
-            update2();
+//            update2();
         }
         
     } 
@@ -418,42 +424,931 @@ Duis et sagittis mauris. Cras ut ante fringilla, rhoncus nisl tincidunt, suscipi
         </button>
       </div>
       <div class="modal-body">
-          <a href="https://github.com/asgundogdu/locationRec"><img class="git" style="height: 40px; widows: 40px"
+          <a href="https://github.com/asgundogdu/locationRec"><img class="git" style="height: 40px;"
          src="scripts/libraries/Octocat.png"
          alt="https://github.com/asgundogdu/locationRec" /></a>
-          <a href="https://github.com/asgundogdu/locationRec"><img class="git" style="height: 30px; widows: 60px"
+          <a href="https://github.com/asgundogdu/locationRec"><img class="git" style="height: 30px;"
          src="scripts/libraries/GitHub_Logo.png"
          alt="https://github.com/asgundogdu/locationRec" /></a>
           <br>
-        <h3>Motivation:</h3>summary of user needs and motivating questions
-        There is a clear focus, and a developed explanation of the problem, and a reasonable response is proposed.
-          <hr style="margin-top: 0; margin-bottom: 1px">
-        <h3>Data:</h3> summary of data, data types, and data preprocessing
-        Data sources match the problem statement and project innovation.
-          <hr style="margin-top: 0; margin-bottom: 1px">
-        <h3>Data Analysis:</h3> summary of interesting results
-        There is extensive exploration of the data.
-          <hr style="margin-top: 0; margin-bottom: 1px">
-        <h3>Task Analysis:</h3> summary of task table
-        Clearly describes domain tasks, processes, goals and abstract tasks for domain problems
-          <hr style="margin-top: 0; margin-bottom: 1px">
-        <h3>Model Description:</h3> summary of modeling options, performance evaluations, and best performing selected model 
-        Thorough description of 
-        Data preprocessing
-        Model architectures (including baselines)
-        Experiments run
-        Evaluation metrics
-        Each description must be accompanied by a justification (ex: why you preprocessed the data that way, why that model was appropriate, etc)
-          <hr style="margin-top: 0; margin-bottom: 1px">
-        <h3>Design Process:</h3> sketches and design choices to justify final visualization
-        Evidence of iterative improvement.
-        Logical discussion of design choices grounded in theory from course.
-          <hr style="margin-top: 0; margin-bottom: 1px">
-        <h3>Final Visualization:</h3> final visualization, design justifications, packages utilized for coding, and UI walk-through
-          <hr style="margin-top: 0; margin-bottom: 1px">
-        <h3>Conclusion:</h3> short summary of work completed and areas for improvement/future-work).
-        Meaningfully wraps up project and has good future directions.
-        Additional non-required sections may be added to the website to thoroughly explain/frame the final project.
+<div class=WordSection1>
+<div class=WordSection1>
+
+<h3>Motivation:<o:p></o:p></h3>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal'><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+mso-fareast-font-family:"Times New Roman"'>While the procession of
+transportation industry in the last hundred years enabled more travelling
+options to the people, it wasn’t until just half a decade ago that the
+egression of social media platforms, shared thriftiness and GPS equipped mobile
+phones enabled these digital footprints of human mobility to be available publicly
+to the entire world. In this new world of shared economy, travelling cost per
+person has reduced due to which more and more people are moving from one region
+to another leaving behind their digital trails on social media sites. Although
+it might be still unclear about how continuing our online existence is going to
+affect the future of human race, one thing is for certain that all this data
+that we are producing every day exemplifies an inexhaustible resource which can
+be utilized for innumerous scientific studies. <br>
+<br>
+The geo-location part of travel check-ins allows researchers to concentrate
+their focus on regions like populated cities. More than half of the population
+of the entire world resides in them. However, these cities aren’t studied just
+because a lot of people live in them, but also because they have a rich history
+of development and growth, which lures many travelers and tourists from all
+over the world. <br>
+<br>
+In this era of social networking sites, people’s behavior online could help us
+have an idea about their tastes and preferences. Social check-ins, which store
+geo-tagged information about users, can be utilized by researchers and
+businesses to investigate these preferences and improve their services. In this
+project, we utilize the travel check-in data and use data-based visualizations
+to explore, assess and evaluate multiple SVD algorithms for the purposes of
+identifying anomalies, generating trust and providing the best recommendation
+for cities to visit in the USA. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal'><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+mso-fareast-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<div class=MsoNormal align=center style='margin-bottom:.75pt;text-align:center;
+line-height:normal'><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+mso-fareast-font-family:"Times New Roman"'>
+
+<hr size=5 width="100%" align=center>
+
+</span></div>
+
+<h3>Data:<o:p></o:p></h3>
+
+<p class=MsoNormal style='margin-bottom:12.0pt;line-height:normal'><span
+style='font-size:12.0pt;font-family:"Times New Roman",serif;mso-fareast-font-family:
+"Times New Roman"'>We are using Yahoo Flickr Creative Commons (YFCC100M)
+dataset which is known to be one of the largest assemblages of multimedia
+check-ins ever created. It is publicly hosted on AWS and was released under the
+Yahoo Web-Scope program. It comprises of hundred million media objects dating
+between 2004 and 2014. Each line contains the metadata for one media object.
+The metadata is cut and tab-separated into following field names: media
+identifier, user identifier, date taken, date uploaded, capture device, location
+(longitude &amp; latitude, if available), accuracy and Creative Commons license
+it was published under. In addition, metadata fields like object title, machine
+tags, user tags, media description and a link from where the media object can
+be downloaded are listed. <br>
+<br>
+We pruned the data first by eliminating unwanted columns in order to make it
+workable with limited RAM; and then by omitting records that weren’t geo-tagged
+(i.e. more than 50%). Since we are focusing the study only on the cities in the
+US, we further filtered the data to records checked in the US. To do so, an
+expansion of YFCC100M containing the reverse geocode information of all records
+was utilized. After both pruning and merging, we were left with about 16
+million records and the following set of columns. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-bottom:12.0pt;line-height:normal'><span
+style='font-size:12.0pt;font-family:"Times New Roman",serif;mso-fareast-font-family:
+"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<div align=center>
+
+<table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0
+ style='border-collapse:collapse;mso-yfti-tbllook:1184;mso-padding-alt:0in 0in 0in 0in'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
+  <td valign=top style='border:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt'>
+  <p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+  line-height:normal'><b><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+  mso-fareast-font-family:"Times New Roman"'>Column</span></b><span
+  style='font-size:12.0pt;font-family:"Times New Roman",serif;mso-fareast-font-family:
+  "Times New Roman"'><o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border:solid black 1.0pt;border-left:none;mso-border-left-alt:
+  solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt'>
+  <p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+  line-height:normal'><b><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+  mso-fareast-font-family:"Times New Roman"'>Description</span></b><span
+  style='font-size:12.0pt;font-family:"Times New Roman",serif;mso-fareast-font-family:
+  "Times New Roman"'><o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border:solid black 1.0pt;border-left:none;mso-border-left-alt:
+  solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt'>
+  <p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+  line-height:normal'><b><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+  mso-fareast-font-family:"Times New Roman"'>Data Type</span></b><span
+  style='font-size:12.0pt;font-family:"Times New Roman",serif;mso-fareast-font-family:
+  "Times New Roman"'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:1'>
+  <td valign=top style='border:solid black 1.0pt;border-top:none;mso-border-top-alt:
+  solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt'>
+  <p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+  line-height:normal'><span class=SpellE><span style='font-size:12.0pt;
+  font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'>pid</span></span><span
+  style='font-size:12.0pt;font-family:"Times New Roman",serif;mso-fareast-font-family:
+  "Times New Roman"'><o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid black 1.0pt;
+  border-right:solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;
+  mso-border-left-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt'>
+  <p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+  line-height:normal'><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+  mso-fareast-font-family:"Times New Roman"'>Unique media identifier<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid black 1.0pt;
+  border-right:solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;
+  mso-border-left-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt'>
+  <p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+  line-height:normal'><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+  mso-fareast-font-family:"Times New Roman"'>categorical<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:2'>
+  <td valign=top style='border:solid black 1.0pt;border-top:none;mso-border-top-alt:
+  solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt'>
+  <p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+  line-height:normal'><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+  mso-fareast-font-family:"Times New Roman"'>address<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid black 1.0pt;
+  border-right:solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;
+  mso-border-left-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt'>
+  <p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+  line-height:normal'><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+  mso-fareast-font-family:"Times New Roman"'>Reverse geocode information<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid black 1.0pt;
+  border-right:solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;
+  mso-border-left-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt'>
+  <p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+  line-height:normal'><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+  mso-fareast-font-family:"Times New Roman"'>categorical<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:3'>
+  <td valign=top style='border:solid black 1.0pt;border-top:none;mso-border-top-alt:
+  solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt'>
+  <p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+  line-height:normal'><span class=SpellE><span style='font-size:12.0pt;
+  font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'>user_nickname</span></span><span
+  style='font-size:12.0pt;font-family:"Times New Roman",serif;mso-fareast-font-family:
+  "Times New Roman"'><o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid black 1.0pt;
+  border-right:solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;
+  mso-border-left-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt'>
+  <p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+  line-height:normal'><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+  mso-fareast-font-family:"Times New Roman"'>User identifier<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid black 1.0pt;
+  border-right:solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;
+  mso-border-left-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt'>
+  <p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+  line-height:normal'><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+  mso-fareast-font-family:"Times New Roman"'>categorical<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:4'>
+  <td valign=top style='border:solid black 1.0pt;border-top:none;mso-border-top-alt:
+  solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt'>
+  <p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+  line-height:normal'><span class=SpellE><span style='font-size:12.0pt;
+  font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'>date_taken</span></span><span
+  style='font-size:12.0pt;font-family:"Times New Roman",serif;mso-fareast-font-family:
+  "Times New Roman"'><o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid black 1.0pt;
+  border-right:solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;
+  mso-border-left-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt'>
+  <p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+  line-height:normal'><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+  mso-fareast-font-family:"Times New Roman"'>Date the media object was created<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid black 1.0pt;
+  border-right:solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;
+  mso-border-left-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt'>
+  <p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+  line-height:normal'><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+  mso-fareast-font-family:"Times New Roman"'>ordinal<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:5'>
+  <td valign=top style='border:solid black 1.0pt;border-top:none;mso-border-top-alt:
+  solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt'>
+  <p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+  line-height:normal'><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+  mso-fareast-font-family:"Times New Roman"'>longitude<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid black 1.0pt;
+  border-right:solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;
+  mso-border-left-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt'>
+  <p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+  line-height:normal'><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+  mso-fareast-font-family:"Times New Roman"'>Longitude of the location the
+  media object was checked at. <o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid black 1.0pt;
+  border-right:solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;
+  mso-border-left-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt'>
+  <p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+  line-height:normal'><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+  mso-fareast-font-family:"Times New Roman"'>quantitative<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:6'>
+  <td valign=top style='border:solid black 1.0pt;border-top:none;mso-border-top-alt:
+  solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt'>
+  <p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+  line-height:normal'><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+  mso-fareast-font-family:"Times New Roman"'>latitude<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid black 1.0pt;
+  border-right:solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;
+  mso-border-left-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt'>
+  <p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+  line-height:normal'><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+  mso-fareast-font-family:"Times New Roman"'>Latitude of the location the media
+  object was checked at. <o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid black 1.0pt;
+  border-right:solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;
+  mso-border-left-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt'>
+  <p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+  line-height:normal'><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+  mso-fareast-font-family:"Times New Roman"'>quantitative<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:7'>
+  <td valign=top style='border:solid black 1.0pt;border-top:none;mso-border-top-alt:
+  solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt'>
+  <p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+  line-height:normal'><span class=SpellE><span style='font-size:12.0pt;
+  font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'>url</span></span><span
+  style='font-size:12.0pt;font-family:"Times New Roman",serif;mso-fareast-font-family:
+  "Times New Roman"'><o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid black 1.0pt;
+  border-right:solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;
+  mso-border-left-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt'>
+  <p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+  line-height:normal'><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+  mso-fareast-font-family:"Times New Roman"'>Link from where the media object
+  can be downloaded<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid black 1.0pt;
+  border-right:solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;
+  mso-border-left-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt'>
+  <p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+  line-height:normal'><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+  mso-fareast-font-family:"Times New Roman"'>categorical<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:8'>
+  <td valign=top style='border:solid black 1.0pt;border-top:none;mso-border-top-alt:
+  solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt'>
+  <p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+  line-height:normal'><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+  mso-fareast-font-family:"Times New Roman"'>town<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid black 1.0pt;
+  border-right:solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;
+  mso-border-left-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt'>
+  <p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+  line-height:normal'><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+  mso-fareast-font-family:"Times New Roman"'>City the media object was checked
+  in, extracted from address column<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid black 1.0pt;
+  border-right:solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;
+  mso-border-left-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt'>
+  <p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+  line-height:normal'><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+  mso-fareast-font-family:"Times New Roman"'>categorical<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:9;mso-yfti-lastrow:yes'>
+  <td valign=top style='border:solid black 1.0pt;border-top:none;mso-border-top-alt:
+  solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt'>
+  <p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+  line-height:normal'><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+  mso-fareast-font-family:"Times New Roman"'>state<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid black 1.0pt;
+  border-right:solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;
+  mso-border-left-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt'>
+  <p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+  line-height:normal'><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+  mso-fareast-font-family:"Times New Roman"'>State the media object was checked
+  in, extracted from address column<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid black 1.0pt;
+  border-right:solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;
+  mso-border-left-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt'>
+  <p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+  line-height:normal'><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+  mso-fareast-font-family:"Times New Roman"'>categorical<o:p></o:p></span></p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p class=MsoNormal style='margin-bottom:.75pt;line-height:normal'><span
+style='font-size:12.0pt;font-family:"Times New Roman",serif;mso-fareast-font-family:
+"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='margin-bottom:.75pt;line-height:normal'><span
+style='font-size:12.0pt;font-family:"Times New Roman",serif;mso-fareast-font-family:
+"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<div class=MsoNormal align=center style='margin-bottom:.75pt;text-align:center;
+line-height:normal'><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+mso-fareast-font-family:"Times New Roman"'>
+
+<hr size=5 width="100%" align=center>
+
+</span></div>
+
+<h3>Data Analysis:<o:p></o:p></h3>
+
+<p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+line-height:normal;mso-outline-level:4'><b><span style='font-size:12.0pt;
+font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'>Visualization
+1: Check-ins hex-binned by location on Map<o:p></o:p></span></b></p>
+
+<img src="scripts/libraries/eda1.PNG" style="height: 60vh;">
+
+<p class=MsoNormal style='margin-bottom:12.0pt;line-height:normal'><span
+style='font-size:12.0pt;font-family:"Times New Roman",serif;mso-fareast-font-family:
+"Times New Roman"'>The above <span class=SpellE>vizualiztion</span> shows a
+hex-<span class=SpellE>bined</span> map of a sample of data. Hex-bins are used
+to encode location of check-ins and color is used to encode number of check-ins
+in that area. We see most of the check-in concentration is around cities like
+New York and San Francisco. The middle of the US has the least number of
+check-ins. It seems most of the popular cities which users like to travel to
+situated on coasts of the US.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+line-height:normal;mso-outline-level:4'><b><span style='font-size:12.0pt;
+font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'>Visualization
+2: Top-10 Cities in Specified Date Range<o:p></o:p></span></b></p>
+
+<img src="scripts/libraries/eda2.PNG" style="height: 60vh;">
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal'><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+mso-fareast-font-family:"Times New Roman"'>The above visualization shows an
+area chart which encodes date data on x axis and number of check-ins on the y
+axis; accompanied by a bar chart which encodes the top-10 cities on y-axis and
+number of check-ins on the x-axis, in the specified date range. We clearly see
+the leading cities across the US. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal'><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+mso-fareast-font-family:"Times New Roman"'><br>
+One interesting thing we noticed from this visualization, that before 2010, we
+can see New York and San Francisco closely competing in the number of
+check-ins. While after 2010, we see New York majorly took lead, have almost
+twice the number of check-ins as San Francisco. <br>
+<br>
+<img src="scripts/libraries/eda3.PNG" style="height: 40vh;">
+<img src="scripts/libraries/eda4.PNG" style="height: 40vh;">    
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal'><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+mso-fareast-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<div class=MsoNormal align=center style='margin-bottom:.75pt;text-align:center;
+line-height:normal'><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+mso-fareast-font-family:"Times New Roman"'>
+
+<hr size=5 width="100%" align=center>
+
+</span></div>
+
+<p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+line-height:normal;mso-outline-level:3'><b><span style='font-size:12.0pt;
+font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'>Task
+Analysis:<o:p></o:p></span></b></p>
+
+<table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0
+ style='border-collapse:collapse;mso-yfti-tbllook:1184;mso-padding-alt:0in 0in 0in 0in'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;height:16.0pt'>
+  <td valign=bottom style='border:solid black 1.0pt;padding:2.0pt 2.0pt 2.0pt 2.0pt;
+  height:16.0pt'>
+  <p class=MsoNormal style='mso-margin-top-alt:auto;margin-bottom:0in;
+  margin-bottom:.0001pt;line-height:normal'><span style='font-size:12.0pt;
+  font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman";
+  color:black'>Index #</span><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+  mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></p>
+  </td>
+  <td valign=bottom style='border:solid black 1.0pt;border-left:none;
+  padding:2.0pt 2.0pt 2.0pt 2.0pt;height:16.0pt'>
+  <p class=MsoNormal style='mso-margin-top-alt:auto;margin-bottom:0in;
+  margin-bottom:.0001pt;line-height:normal'><span style='font-size:12.0pt;
+  font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman";
+  color:black'>“Domain” task</span><span style='font-size:12.0pt;font-family:
+  "Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></p>
+  </td>
+  <td valign=bottom style='border:solid black 1.0pt;border-left:none;
+  padding:2.0pt 2.0pt 2.0pt 2.0pt;height:16.0pt'>
+  <p class=MsoNormal style='mso-margin-top-alt:auto;margin-bottom:0in;
+  margin-bottom:.0001pt;line-height:normal'><span style='font-size:12.0pt;
+  font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman";
+  color:black'>Analytic Task</span><span style='font-size:12.0pt;font-family:
+  "Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></p>
+  </td>
+  <td valign=bottom style='border:solid black 1.0pt;border-left:none;
+  padding:2.0pt 2.0pt 2.0pt 2.0pt;height:16.0pt'>
+  <p class=MsoNormal style='mso-margin-top-alt:auto;margin-bottom:0in;
+  margin-bottom:.0001pt;line-height:normal'><span style='font-size:12.0pt;
+  font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman";
+  color:black'>Search Task</span><span style='font-size:12.0pt;font-family:
+  "Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></p>
+  </td>
+  <td valign=bottom style='border:solid black 1.0pt;border-left:none;
+  padding:2.0pt 2.0pt 2.0pt 2.0pt;height:16.0pt'>
+  <p class=MsoNormal style='mso-margin-top-alt:auto;margin-bottom:0in;
+  margin-bottom:.0001pt;line-height:normal'><span style='font-size:12.0pt;
+  font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman";
+  color:black'>Analyze Task</span><span style='font-size:12.0pt;font-family:
+  "Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:1;height:27.0pt'>
+  <td valign=bottom style='border:solid black 1.0pt;border-top:none;padding:
+  2.0pt 2.0pt 2.0pt 2.0pt;height:27.0pt'>
+  <p class=MsoNormal align=right style='mso-margin-top-alt:auto;margin-bottom:
+  0in;margin-bottom:.0001pt;text-align:right;line-height:normal'><span
+  style='font-size:12.0pt;font-family:"Times New Roman",serif;mso-fareast-font-family:
+  "Times New Roman";color:black'>3</span><span style='font-size:12.0pt;
+  font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></p>
+  </td>
+  <td valign=bottom style='border-top:none;border-left:none;border-bottom:solid black 1.0pt;
+  border-right:solid black 1.0pt;padding:2.0pt 2.0pt 2.0pt 2.0pt;height:27.0pt'>
+  <p class=MsoNormal style='mso-margin-top-alt:auto;margin-bottom:0in;
+  margin-bottom:.0001pt;line-height:normal'><span style='font-size:12.0pt;
+  font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman";
+  color:black'>Examining the model performance of the recommended places for
+  given user history</span><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+  mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></p>
+  </td>
+  <td valign=bottom style='border-top:none;border-left:none;border-bottom:solid black 1.0pt;
+  border-right:solid black 1.0pt;padding:2.0pt 2.0pt 2.0pt 2.0pt;height:27.0pt'>
+  <p class=MsoNormal style='mso-margin-top-alt:auto;margin-bottom:0in;
+  margin-bottom:.0001pt;line-height:normal'><span style='font-size:12.0pt;
+  font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman";
+  color:black'>Filter</span><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+  mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></p>
+  </td>
+  <td valign=bottom style='border-top:none;border-left:none;border-bottom:solid black 1.0pt;
+  border-right:solid black 1.0pt;padding:2.0pt 2.0pt 2.0pt 2.0pt;height:27.0pt'>
+  <p class=MsoNormal style='mso-margin-top-alt:auto;margin-bottom:0in;
+  margin-bottom:.0001pt;line-height:normal'><span style='font-size:12.0pt;
+  font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman";
+  color:black'>Locate</span><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+  mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></p>
+  </td>
+  <td valign=bottom style='border-top:none;border-left:none;border-bottom:solid black 1.0pt;
+  border-right:solid black 1.0pt;padding:2.0pt 2.0pt 2.0pt 2.0pt;height:27.0pt'>
+  <p class=MsoNormal style='mso-margin-top-alt:auto;margin-bottom:0in;
+  margin-bottom:.0001pt;line-height:normal'><span style='font-size:12.0pt;
+  font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman";
+  color:black'>Present</span><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+  mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:2;height:15.0pt'>
+  <td valign=bottom style='border:solid black 1.0pt;border-top:none;padding:
+  2.0pt 2.0pt 2.0pt 2.0pt;height:15.0pt'>
+  <p class=MsoNormal align=right style='mso-margin-top-alt:auto;margin-bottom:
+  0in;margin-bottom:.0001pt;text-align:right;line-height:normal'><span
+  style='font-size:12.0pt;font-family:"Times New Roman",serif;mso-fareast-font-family:
+  "Times New Roman";color:black'>5</span><span style='font-size:12.0pt;
+  font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></p>
+  </td>
+  <td valign=bottom style='border-top:none;border-left:none;border-bottom:solid black 1.0pt;
+  border-right:solid black 1.0pt;padding:2.0pt 2.0pt 2.0pt 2.0pt;height:15.0pt'>
+  <p class=MsoNormal style='mso-margin-top-alt:auto;margin-bottom:0in;
+  margin-bottom:.0001pt;line-height:normal'><span style='font-size:12.0pt;
+  font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman";
+  color:black'>Providing the list of most possible predictions of the model
+  output for given user</span><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+  mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></p>
+  </td>
+  <td valign=bottom style='border-top:none;border-left:none;border-bottom:solid black 1.0pt;
+  border-right:solid black 1.0pt;padding:2.0pt 2.0pt 2.0pt 2.0pt;height:15.0pt'>
+  <p class=MsoNormal style='mso-margin-top-alt:auto;margin-bottom:0in;
+  margin-bottom:.0001pt;line-height:normal'><span style='font-size:12.0pt;
+  font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman";
+  color:black'>Sort</span><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+  mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></p>
+  </td>
+  <td valign=bottom style='border-top:none;border-left:none;border-bottom:solid black 1.0pt;
+  border-right:solid black 1.0pt;padding:2.0pt 2.0pt 2.0pt 2.0pt;height:15.0pt'>
+  <p class=MsoNormal style='mso-margin-top-alt:auto;margin-bottom:0in;
+  margin-bottom:.0001pt;line-height:normal'><span style='font-size:12.0pt;
+  font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman";
+  color:black'>Explore</span><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+  mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></p>
+  </td>
+  <td valign=bottom style='border-top:none;border-left:none;border-bottom:solid black 1.0pt;
+  border-right:solid black 1.0pt;padding:2.0pt 2.0pt 2.0pt 2.0pt;height:15.0pt'>
+  <p class=MsoNormal style='mso-margin-top-alt:auto;margin-bottom:0in;
+  margin-bottom:.0001pt;line-height:normal'><span style='font-size:12.0pt;
+  font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman";
+  color:black'>Present</span><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+  mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:3;height:15.0pt'>
+  <td valign=bottom style='border:solid black 1.0pt;border-top:none;padding:
+  2.0pt 2.0pt 2.0pt 2.0pt;height:15.0pt'>
+  <p class=MsoNormal align=right style='mso-margin-top-alt:auto;margin-bottom:
+  0in;margin-bottom:.0001pt;text-align:right;line-height:normal'><span
+  style='font-size:12.0pt;font-family:"Times New Roman",serif;mso-fareast-font-family:
+  "Times New Roman";color:black'>2</span><span style='font-size:12.0pt;
+  font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></p>
+  </td>
+  <td valign=bottom style='border-top:none;border-left:none;border-bottom:solid black 1.0pt;
+  border-right:solid black 1.0pt;padding:2.0pt 2.0pt 2.0pt 2.0pt;height:15.0pt'>
+  <p class=MsoNormal style='mso-margin-top-alt:auto;margin-bottom:0in;
+  margin-bottom:.0001pt;line-height:normal'><span style='font-size:12.0pt;
+  font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman";
+  color:black'>Visualization of different modeling parameters and evaluations</span><span
+  style='font-size:12.0pt;font-family:"Times New Roman",serif;mso-fareast-font-family:
+  "Times New Roman"'><o:p></o:p></span></p>
+  </td>
+  <td valign=bottom style='border-top:none;border-left:none;border-bottom:solid black 1.0pt;
+  border-right:solid black 1.0pt;padding:2.0pt 2.0pt 2.0pt 2.0pt;height:15.0pt'>
+  <p class=MsoNormal style='mso-margin-top-alt:auto;margin-bottom:0in;
+  margin-bottom:.0001pt;line-height:normal'><span style='font-size:12.0pt;
+  font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman";
+  color:black'>Compare</span><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+  mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></p>
+  </td>
+  <td valign=bottom style='border-top:none;border-left:none;border-bottom:solid black 1.0pt;
+  border-right:solid black 1.0pt;padding:2.0pt 2.0pt 2.0pt 2.0pt;height:15.0pt'>
+  <p class=MsoNormal style='mso-margin-top-alt:auto;margin-bottom:0in;
+  margin-bottom:.0001pt;line-height:normal'><span style='font-size:12.0pt;
+  font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman";
+  color:black'>Explore</span><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+  mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></p>
+  </td>
+  <td valign=bottom style='border-top:none;border-left:none;border-bottom:solid black 1.0pt;
+  border-right:solid black 1.0pt;padding:2.0pt 2.0pt 2.0pt 2.0pt;height:15.0pt'>
+  <p class=MsoNormal style='mso-margin-top-alt:auto;margin-bottom:0in;
+  margin-bottom:.0001pt;line-height:normal'><span style='font-size:12.0pt;
+  font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman";
+  color:black'>Discover</span><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+  mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:4;height:15.0pt'>
+  <td valign=bottom style='border:solid black 1.0pt;border-top:none;padding:
+  2.0pt 2.0pt 2.0pt 2.0pt;height:15.0pt'>
+  <p class=MsoNormal align=right style='mso-margin-top-alt:auto;margin-bottom:
+  0in;margin-bottom:.0001pt;text-align:right;line-height:normal'><span
+  style='font-size:12.0pt;font-family:"Times New Roman",serif;mso-fareast-font-family:
+  "Times New Roman";color:black'>1</span><span style='font-size:12.0pt;
+  font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></p>
+  </td>
+  <td valign=bottom style='border-top:none;border-left:none;border-bottom:solid black 1.0pt;
+  border-right:solid black 1.0pt;padding:2.0pt 2.0pt 2.0pt 2.0pt;height:15.0pt'>
+  <p class=MsoNormal style='mso-margin-top-alt:auto;margin-bottom:0in;
+  margin-bottom:.0001pt;line-height:normal'><span style='font-size:12.0pt;
+  font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman";
+  color:black'>Exploratory Data Visualizations</span><span style='font-size:
+  12.0pt;font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></p>
+  </td>
+  <td valign=bottom style='border-top:none;border-left:none;border-bottom:solid black 1.0pt;
+  border-right:solid black 1.0pt;padding:2.0pt 2.0pt 2.0pt 2.0pt;height:15.0pt'>
+  <p class=MsoNormal style='mso-margin-top-alt:auto;margin-bottom:0in;
+  margin-bottom:.0001pt;line-height:normal'><span style='font-size:12.0pt;
+  font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman";
+  color:black'>Compare</span><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+  mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></p>
+  </td>
+  <td valign=bottom style='border-top:none;border-left:none;border-bottom:solid black 1.0pt;
+  border-right:solid black 1.0pt;padding:2.0pt 2.0pt 2.0pt 2.0pt;height:15.0pt'>
+  <p class=MsoNormal style='mso-margin-top-alt:auto;margin-bottom:0in;
+  margin-bottom:.0001pt;line-height:normal'><span style='font-size:12.0pt;
+  font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman";
+  color:black'>Explore</span><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+  mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></p>
+  </td>
+  <td valign=bottom style='border-top:none;border-left:none;border-bottom:solid black 1.0pt;
+  border-right:solid black 1.0pt;padding:2.0pt 2.0pt 2.0pt 2.0pt;height:15.0pt'>
+  <p class=MsoNormal style='mso-margin-top-alt:auto;margin-bottom:0in;
+  margin-bottom:.0001pt;line-height:normal'><span style='font-size:12.0pt;
+  font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman";
+  color:black'>Discover</span><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+  mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:5;mso-yfti-lastrow:yes;height:15.0pt'>
+  <td valign=bottom style='border:solid black 1.0pt;border-top:none;padding:
+  2.0pt 2.0pt 2.0pt 2.0pt;height:15.0pt'>
+  <p class=MsoNormal align=right style='mso-margin-top-alt:auto;margin-bottom:
+  0in;margin-bottom:.0001pt;text-align:right;line-height:normal'><span
+  style='font-size:12.0pt;font-family:"Times New Roman",serif;mso-fareast-font-family:
+  "Times New Roman";color:black'>4</span><span style='font-size:12.0pt;
+  font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></p>
+  </td>
+  <td valign=bottom style='border-top:none;border-left:none;border-bottom:solid black 1.0pt;
+  border-right:solid black 1.0pt;padding:2.0pt 2.0pt 2.0pt 2.0pt;height:15.0pt'>
+  <p class=MsoNormal style='mso-margin-top-alt:auto;margin-bottom:0in;
+  margin-bottom:.0001pt;line-height:normal'><span style='font-size:12.0pt;
+  font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman";
+  color:black'>Evaluation of predicted recommendations</span><span
+  style='font-size:12.0pt;font-family:"Times New Roman",serif;mso-fareast-font-family:
+  "Times New Roman"'><o:p></o:p></span></p>
+  </td>
+  <td valign=bottom style='border-top:none;border-left:none;border-bottom:solid black 1.0pt;
+  border-right:solid black 1.0pt;padding:2.0pt 2.0pt 2.0pt 2.0pt;height:15.0pt'>
+  <p class=MsoNormal style='mso-margin-top-alt:auto;margin-bottom:0in;
+  margin-bottom:.0001pt;line-height:normal'><span style='font-size:12.0pt;
+  font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman";
+  color:black'>Compare</span><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+  mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></p>
+  </td>
+  <td valign=bottom style='border-top:none;border-left:none;border-bottom:solid black 1.0pt;
+  border-right:solid black 1.0pt;padding:2.0pt 2.0pt 2.0pt 2.0pt;height:15.0pt'>
+  <p class=MsoNormal style='mso-margin-top-alt:auto;margin-bottom:0in;
+  margin-bottom:.0001pt;line-height:normal'><span style='font-size:12.0pt;
+  font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman";
+  color:black'>Explore</span><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+  mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></p>
+  </td>
+  <td valign=bottom style='border-top:none;border-left:none;border-bottom:solid black 1.0pt;
+  border-right:solid black 1.0pt;padding:2.0pt 2.0pt 2.0pt 2.0pt;height:15.0pt'>
+  <p class=MsoNormal style='mso-margin-top-alt:auto;margin-bottom:0in;
+  margin-bottom:.0001pt;line-height:normal'><span style='font-size:12.0pt;
+  font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman";
+  color:black'>Present</span><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+  mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal style='mso-margin-top-alt:auto;margin-bottom:0in;margin-bottom:
+.0001pt;line-height:normal'><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+mso-fareast-font-family:"Times New Roman";color:black'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='mso-margin-top-alt:auto;margin-bottom:0in;margin-bottom:
+.0001pt;line-height:normal'><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+mso-fareast-font-family:"Times New Roman";color:black'>Our visualization will
+be primarily developed for “discover” (i.e., exploratory visualization),
+“present” (i.e., communicative visualization) consumptions. The <span
+class=GramE>three domain</span> task will enable our potential users to have
+more understanding and flexibility of choosing different models for the
+location recommendation tasks. The reasons of choosing the specified tasks are
+as follows:<o:p></o:p></span></p>
+
+<ol start=1 type=1>
+ <li class=MsoNormal style='color:black;mso-margin-top-alt:auto;margin-bottom:
+     0in;margin-bottom:.0001pt;line-height:normal;mso-list:l6 level1 lfo1;
+     tab-stops:list .5in;vertical-align:baseline'><span style='font-size:12.0pt;
+     font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'>Index
+     #3: Physically demonstrate and deliver the models outputs to the users. <o:p></o:p></span></li>
+ <li class=MsoNormal style='color:black;mso-margin-top-alt:auto;margin-bottom:
+     0in;margin-bottom:.0001pt;line-height:normal;mso-list:l6 level1 lfo1;
+     tab-stops:list .5in;vertical-align:baseline'><span style='font-size:12.0pt;
+     font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'>Index
+     #5: As the model will predict the given user's tendencies as a number, we
+     will be sorting the top 10 locations rather than calculating the proximity
+     to the real location. Here we will evaluate our model performance using
+     Precision@10 metric which is looking at the user’s top ten location
+     preference and predicted top 10 recommendations. <o:p></o:p></span></li>
+ <li class=MsoNormal style='color:black;mso-margin-top-alt:auto;margin-bottom:
+     0in;margin-bottom:.0001pt;line-height:normal;mso-list:l6 level1 lfo1;
+     tab-stops:list .5in;vertical-align:baseline'><span style='font-size:12.0pt;
+     font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'>Index
+     #2: Enable users to choose their modeling approach (at least 2 different
+     models) and tune their parameter and evaluation metrics (i.e. they may
+     want to see just the top 3 recommendations and the evaluations according
+     to their choice)<o:p></o:p></span></li>
+ <li class=MsoNormal style='color:black;mso-margin-top-alt:auto;margin-bottom:
+     0in;margin-bottom:.0001pt;line-height:normal;mso-list:l6 level1 lfo1;
+     tab-stops:list .5in;vertical-align:baseline'><span style='font-size:12.0pt;
+     font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'>Index
+     #1: Get an idea about the data on which all the analysis is based on.<o:p></o:p></span></li>
+ <li class=MsoNormal style='color:black;mso-margin-top-alt:auto;margin-bottom:
+     0in;margin-bottom:.0001pt;line-height:normal;mso-list:l6 level1 lfo1;
+     tab-stops:list .5in;vertical-align:baseline'><span style='font-size:12.0pt;
+     font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'>Index
+     #4: Visual evaluations of results.<o:p></o:p></span></li>
+</ol>
+
+<p class=MsoNormal style='mso-margin-top-alt:auto;margin-bottom:0in;margin-bottom:
+.0001pt;line-height:normal'><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+mso-fareast-font-family:"Times New Roman";color:black'>The users of the end
+product will be the researchers and machine learning engineers who are
+interested in recommendation systems.</span><span style='font-size:12.0pt;
+font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-bottom:12.0pt;line-height:normal'><span
+style='font-size:12.0pt;font-family:"Times New Roman",serif;mso-fareast-font-family:
+"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<div class=MsoNormal align=center style='margin-bottom:.75pt;text-align:center;
+line-height:normal'><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+mso-fareast-font-family:"Times New Roman"'>
+
+<hr size=5 width="100%" align=center>
+
+</span></div>
+
+<h3>Model Description:<o:p></o:p></h3>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal'><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+mso-fareast-font-family:"Times New Roman"'>We give the user the freedom to
+assess and visualize different adaptations of SVD on his/her selection of
+hyperparameters.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal'><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+mso-fareast-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal'><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+mso-fareast-font-family:"Times New Roman"'>We have the following options for Hyperparameter
+Testing and Model Selection:<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal'><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+mso-fareast-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal'><b style='mso-bidi-font-weight:normal'><span style='font-size:12.0pt;
+font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'>Preprocessing:<o:p></o:p></span></b></p>
+
+<ol start=1 type=1>
+ <li class=MsoNormal style='color:black;mso-margin-top-alt:auto;margin-bottom:
+     0in;margin-bottom:.0001pt;line-height:normal;mso-list:l1 level1 lfo6;
+     tab-stops:list .5in;vertical-align:baseline'><span style='font-size:12.0pt;
+     font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'>Numeric:
+     Count the number of check-ins for each city per user, this creates a
+     numeric label in domain [0, inf).<o:p></o:p></span></li>
+ <li class=MsoNormal style='color:black;mso-margin-top-alt:auto;margin-bottom:
+     0in;margin-bottom:.0001pt;line-height:normal;mso-list:l1 level1 lfo6;
+     tab-stops:list .5in;vertical-align:baseline'><span style='font-size:12.0pt;
+     font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'>Binary:
+     Label User-Location pair as 1 if user has checked-in in that city,
+     otherwise 0.<o:p></o:p></span></li>
+</ol>
+
+<p class=MsoNormal style='mso-margin-top-alt:auto;margin-bottom:0in;margin-left:
+.5in;margin-bottom:.0001pt;line-height:normal;vertical-align:baseline'><span
+style='font-size:12.0pt;font-family:"Times New Roman",serif;mso-fareast-font-family:
+"Times New Roman";color:black'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal'><b style='mso-bidi-font-weight:normal'><span style='font-size:12.0pt;
+font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'>Models:<o:p></o:p></span></b></p>
+
+<ol start=1 type=1>
+ <li class=MsoNormal style='color:black;mso-margin-top-alt:auto;margin-bottom:
+     0in;margin-bottom:.0001pt;line-height:normal;mso-list:l2 level1 lfo7;
+     tab-stops:list .5in;vertical-align:baseline'><span style='font-size:12.0pt;
+     font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'>SVD_explicit:
+     Use Singular Value Decomposition to extract user and location features and
+     approximate the missing user check-ins by matrix factorization.<o:p></o:p></span></li>
+ <li class=MsoNormal style='color:black;mso-margin-top-alt:auto;margin-bottom:
+     0in;margin-bottom:.0001pt;line-height:normal;mso-list:l2 level1 lfo7;
+     tab-stops:list .5in;vertical-align:baseline'><span style='font-size:12.0pt;
+     font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'>SVD_implicit:
+     Use Singular Value Decomposition to extract user and location features and
+     then applying Alternating Least Square method to get an optimal fit for
+     missing points.<o:p></o:p></span></li>
+</ol>
+
+<p class=MsoNormal style='mso-margin-top-alt:auto;margin-bottom:0in;margin-left:
+.5in;margin-bottom:.0001pt;line-height:normal;vertical-align:baseline'><span
+style='font-size:12.0pt;font-family:"Times New Roman",serif;mso-fareast-font-family:
+"Times New Roman";color:black'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal'><b style='mso-bidi-font-weight:normal'><span style='font-size:12.0pt;
+font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'>Latent
+Dimensions:</span></b><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+mso-fareast-font-family:"Times New Roman";color:#333333'> Denotes the number of
+dimensions/features to extract for each user and location.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal'><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+mso-fareast-font-family:"Times New Roman";color:#333333'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal'><b style='mso-bidi-font-weight:normal'><span style='font-size:12.0pt;
+font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'>Metric:
+<o:p></o:p></span></b></p>
+
+<ol start=1 type=1>
+ <li class=MsoNormal style='color:black;mso-margin-top-alt:auto;margin-bottom:
+     0in;margin-bottom:.0001pt;line-height:normal;mso-list:l3 level1 lfo5;
+     tab-stops:list .5in;vertical-align:baseline'><span style='font-size:12.0pt;
+     font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'>Precision-Train
+     Set: Use Precision@10 metric which looks at the user’s top ten location
+     preference and compare it with the predicted top 10 recommendations for Train
+     Set.<o:p></o:p></span></li>
+ <li class=MsoNormal style='color:black;mso-margin-top-alt:auto;margin-bottom:
+     0in;margin-bottom:.0001pt;line-height:normal;mso-list:l3 level1 lfo5;
+     tab-stops:list .5in;vertical-align:baseline'><span style='font-size:12.0pt;
+     font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'>Recall-Train
+     Set: Use Recall as metric to assess the user’s top ten location preference
+     and compare it with the predicted top 10 recommendations for Train Set.<o:p></o:p></span></li>
+ <li class=MsoNormal style='color:black;mso-margin-top-alt:auto;margin-bottom:
+     0in;margin-bottom:.0001pt;line-height:normal;mso-list:l3 level1 lfo5;
+     tab-stops:list .5in;vertical-align:baseline'><span style='font-size:12.0pt;
+     font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'>Precision-Validation
+     Set: Use Precision@10 metric which looks at the user’s top ten location
+     preference and compare it with the predicted top 10 recommendations for Validation
+     Set.<o:p></o:p></span></li>
+ <li class=MsoNormal style='color:black;mso-margin-top-alt:auto;margin-bottom:
+     0in;margin-bottom:.0001pt;line-height:normal;mso-list:l3 level1 lfo5;
+     tab-stops:list .5in;vertical-align:baseline'><span style='font-size:12.0pt;
+     font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'>Recall-Validation
+     Set: Use Recall as metric to assess the user’s top ten location preference
+     and compare it with the predicted top 10 recommendations for Validation
+     Set.<o:p></o:p></span></li>
+ <li class=MsoNormal style='color:black;mso-margin-top-alt:auto;margin-bottom:
+     0in;margin-bottom:.0001pt;line-height:normal;mso-list:l3 level1 lfo5;
+     tab-stops:list .5in;vertical-align:baseline'><span style='font-size:12.0pt;
+     font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'>RMSE-Train
+     Set: Use RMSE metric which looks at the user’s top ten location preference
+     and compare it with the predicted top 10 recommendations for Train Set.<o:p></o:p></span></li>
+ <li class=MsoNormal style='color:black;mso-margin-top-alt:auto;margin-bottom:
+     0in;margin-bottom:.0001pt;line-height:normal;mso-list:l3 level1 lfo5;
+     tab-stops:list .5in;vertical-align:baseline'><span style='font-size:12.0pt;
+     font-family:"Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'>RMSE-Validation
+     Set: Use RMSE metric which looks at the user’s top ten location preference
+     and compare it with the predicted top 10 recommendations for Validation
+     Set.<o:p></o:p></span></li>
+</ol>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal'><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+mso-fareast-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<div class=MsoNormal align=center style='margin-bottom:.75pt;text-align:center;
+line-height:normal'><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+mso-fareast-font-family:"Times New Roman"'>
+
+<hr size=5 width="100%" align=center>
+
+</span></div>
+
+<h3>Design Process:<o:p></o:p></h3>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal'><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+mso-fareast-font-family:"Times New Roman"'>sketches and design choices to
+justify final visualization Evidence of iterative improvement. Logical
+discussion of design choices grounded in theory from course. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal'><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+mso-fareast-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<div class=MsoNormal align=center style='margin-bottom:.75pt;text-align:center;
+line-height:normal'><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+mso-fareast-font-family:"Times New Roman"'>
+
+<hr size=5 width="100%" align=center>
+
+</span></div>
+
+<h3>Final Visualization:<o:p></o:p></h3>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal'><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+mso-fareast-font-family:"Times New Roman"'>final visualization, design justifications,
+packages utilized for coding, and UI walk-through <o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal'><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+mso-fareast-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<div class=MsoNormal align=center style='margin-bottom:.75pt;text-align:center;
+line-height:normal'><span style='font-size:12.0pt;font-family:"Times New Roman",serif;
+mso-fareast-font-family:"Times New Roman"'>
+
+<hr size=5 width="100%" align=center>
+
+</span></div>
+
+<h3>Conclusion:<o:p></o:p></h3>
+
+<p class=MsoNormal><span style='font-size:12.0pt;line-height:107%;font-family:
+"Times New Roman",serif;mso-fareast-font-family:"Times New Roman"'>short
+summary of work completed and areas for improvement/future-work). Meaningfully
+wraps up project and has good future directions. Additional non-required
+sections may be added to the website to thoroughly explain/frame the final
+project.</span><span style='font-size:12.0pt;line-height:107%;font-family:"Times New Roman",serif'><o:p></o:p></span></p>
+
+</div>
+
+
+
 
       </div>
       <div class="modal-footer"></div>
