@@ -11,7 +11,7 @@ from CF.collaborative_filtering import locationRec
 from flask import Flask, jsonify
 from flask_cors import CORS
 import googlemaps
-GOOGLE_MAP_KEY = 'AIzaSyAmuBH9FWYvSYZ8yXMUnNtddxMWgoU1-LY'
+GOOGLE_MAP_KEY = <GOOGLEMAPKEY>
 
 app = Flask(__name__)
 CORS(app)
