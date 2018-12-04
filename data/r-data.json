@@ -1,1 +1,162 @@
-[{"location":"Atlanta","lat":33.7704,"lon":-84.3978},{"location":"Austin","lat":29.7569,"lon":-97.7018},{"location":"Boston","lat":41.2525,"lon":-73.0192},{"location":"Chicago","lat":41.938,"lon":-87.7158},{"location":"Los Angeles","lat":34.0899,"lon":-118.1148},{"location":"New Jersey","lat":40.6127,"lon":-74.2585},{"location":"New York","lat":43.0667,"lon":-76.1709},{"location":"San Diego","lat":32.7534,"lon":-117.1012},{"location":"San Francisco","lat":13.6857,"lon":-89.2254},{"location":"Seattle","lat":47.6493,"lon":-122.3315}]
+[
+  {
+    "Recommendations": "Portland", 
+    "lat": 45.5122308, 
+    "lon": -122.6587185
+  }, 
+  {
+    "Recommendations": "Seattle", 
+    "lat": 47.6062095, 
+    "lon": -122.3320708
+  }, 
+  {
+    "Recommendations": "Minneapolis", 
+    "lat": 44.977753, 
+    "lon": -93.2650108
+  }, 
+  {
+    "Recommendations": "Phoenix", 
+    "lat": 33.4483771, 
+    "lon": -112.0740373
+  }, 
+  {
+    "Recommendations": "College Station", 
+    "lat": 30.627977, 
+    "lon": -96.3344068
+  }, 
+  {
+    "Recommendations": "San Antonio", 
+    "lat": 29.4241219, 
+    "lon": -98.49362819999999
+  }, 
+  {
+    "Recommendations": "Bryan", 
+    "lat": 30.6743643, 
+    "lon": -96.3699632
+  }, 
+  {
+    "Recommendations": "Sugar Land", 
+    "lat": 29.6196787, 
+    "lon": -95.6349463
+  }, 
+  {
+    "Recommendations": "Galveston", 
+    "lat": 29.3013479, 
+    "lon": -94.7976958
+  }, 
+  {
+    "Recommendations": "Albany", 
+    "lat": 42.6525793, 
+    "lon": -73.7562317
+  }, 
+  {
+    "Actuals": "Manvel", 
+    "lat": 29.4627365, 
+    "lon": -95.35799399999999
+  }, 
+  {
+    "Actuals": "Stafford", 
+    "lat": 38.4220687, 
+    "lon": -77.4083086
+  }, 
+  {
+    "Actuals": "Spring", 
+    "lat": 41.773344, 
+    "lon": -88.199788
+  }, 
+  {
+    "Actuals": "Friendswood", 
+    "lat": 29.5293998, 
+    "lon": -95.2010447
+  }, 
+  {
+    "Actuals": "San Antonio", 
+    "lat": 29.4241219, 
+    "lon": -98.49362819999999
+  }, 
+  {
+    "Actuals": "Seabrook", 
+    "lat": 29.56411839999999, 
+    "lon": -95.0254839
+  }, 
+  {
+    "Actuals": "Austin", 
+    "lat": 30.267153, 
+    "lon": -97.7430608
+  }, 
+  {
+    "Actuals": "La Porte", 
+    "lat": 29.6657838, 
+    "lon": -95.0193728
+  }, 
+  {
+    "Actuals": "Houston", 
+    "lat": 29.7604267, 
+    "lon": -95.3698028
+  }, 
+  {
+    "Actuals": "Alvin", 
+    "lat": 29.4238472, 
+    "lon": -95.24410089999999
+  }, 
+  {
+    "Actuals": "Pasadena", 
+    "lat": 34.1477849, 
+    "lon": -118.1445155
+  }, 
+  {
+    "Actuals": "Pearland", 
+    "lat": 29.5635666, 
+    "lon": -95.2860474
+  }, 
+  {
+    "Actuals": "Galveston", 
+    "lat": 29.3013479, 
+    "lon": -94.7976958
+  }, 
+  {
+    "Actuals": "Todd Mission", 
+    "lat": 30.2615994, 
+    "lon": -95.8302284
+  }, 
+  {
+    "Actuals": "Webster", 
+    "lat": 43.2122851, 
+    "lon": -77.4299939
+  }, 
+  {
+    "Actuals": "League City", 
+    "lat": 29.5074538, 
+    "lon": -95.0949303
+  }, 
+  {
+    "Actuals": "Sugar Land", 
+    "lat": 29.6196787, 
+    "lon": -95.6349463
+  }, 
+  {
+    "Actuals": "Garland", 
+    "lat": 32.912624, 
+    "lon": -96.63888329999999
+  }, 
+  {
+    "Actuals": "Aldine", 
+    "lat": 29.932445, 
+    "lon": -95.3802149
+  }, 
+  {
+    "Actuals": "Bellaire", 
+    "lat": 29.7057858, 
+    "lon": -95.4588299
+  }, 
+  {
+    "Actuals": "Deer Park", 
+    "lat": 29.7052284, 
+    "lon": -95.1238204
+  }, 
+  {
+    "Actuals": "Dallas", 
+    "lat": 32.7766642, 
+    "lon": -96.79698789999999
+  }
+]
