@@ -140,14 +140,14 @@ var update2 = function() {
                         .attr('y', 10)
                         .attr('width', 40)
                         .attr('height', 40)
-                        .attr("xlink:href", 'scripts/a.gif')
+                        .attr("xlink:href", 'images/a.gif')
         
                     svg.append("svg:image")
                         .attr('x', 8)
                         .attr('y', 40)
                         .attr('width', 40)
                         .attr('height', 40)
-                        .attr("xlink:href", 'scripts/r.gif')
+                        .attr("xlink:href", 'images/r.gif')
         
                     svg.append("text")
                         .attr('x', 48)
