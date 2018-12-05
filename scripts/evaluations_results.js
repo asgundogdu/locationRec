@@ -6,7 +6,7 @@ var form=document.getElementById("form2");
     }
 
 var r_data=[];    
-var server = "http://35.227.40.171:8080"
+var server = "https://35.227.40.171:8080"
 var def_url2= "/cf_recommend/preprocessing=Numeric&model=SVD_implicit&dim=30&top_k=10&user=91"
 
 var get_data2 = function(pval, mval, ldval, user, callback) {

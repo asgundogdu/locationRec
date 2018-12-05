@@ -8,7 +8,7 @@ var form=document.getElementById("form1");
     }
 
 var ht_data=[];    
-var server = "http://35.227.40.171:8080"
+var server = "https://35.227.40.171:8080"
 var def_url1= "/cf_eval/preprocessing=Numeric&model=SVD_explicit&dim=40&top_k=10"
 var get_data1 = function(pvals, mvals, ldvals, mt, callback) {
     $('#loader2').show();
