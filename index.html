@@ -194,7 +194,12 @@
         <div id="eda-s">
             <h3>City Recommendation in the USA using Yahoo Flickr Creative Commons 100M Dataset</h3>
             <h4> by Anant Jain, Ahmet Salih Gundogdu</h4>
-            <h6><b>Objective: </b> Use data based visualizations to explore, assess and evaluate multiple SVD algorithms for the purposes of identifying anomalies, generating trust and providing the best recommendation for cities to visit in the USA. <br><br>This project was submitted as the final deliverable to the mandatory project for the course DS 5500, taught in Fall 2018 at Northeastern University under the guidance of Prof. Cody Dunne and Ansel MacLaughlin. <a data-toggle="modal" data-target="#rm"><span class="glyphicon glyphicon-file" aria-hidden="true"></span></a></h6>
+            <h6><b>Objective: </b> Use data based visualizations to explore, assess and evaluate multiple SVD algorithms for the purposes of identifying anomalies, generating trust and providing the best recommendation for cities to visit in the USA. <br><br>This project was submitted as the final deliverable to the mandatory project for the course DS 5500, taught in Fall 2018 at Northeastern University under the guidance of Prof. Cody Dunne and Ansel MacLaughlin. 
+                <a data-toggle="modal" data-target="#rm"><span class="glyphicon glyphicon-file" aria-hidden="true"></span></a>&nbsp;
+                
+                <a data-toggle="modal" data-target="#pt"><span class="glyphicon glyphicon-film" aria-hidden="true"></span></a>&nbsp;
+                
+                <a data-toggle="modal" data-target="#vw"><span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span></a></h6>
             <h4 style="font-family: serif; margin-bottom: 0; padding-top: 4px">Date Range:</h4>
             <hr style="margin-top: 0; margin-bottom: 1px">
             <svg class="datechart" style="width:100%; margin: 10px 0px -30px 0px;"></svg>
@@ -398,10 +403,20 @@
         $("#legend").draggable();
         $("#rlegend").draggable();
         
-        $('.glyphicon').tipsy(
+        $('.glyphicon glyphicon-file').tipsy(
             {   
                 gravity: 'w',
                 fallback: "View README"
+            });
+        $('.glyphicon glyphicon-film').tipsy(
+            {   
+                gravity: 'w',
+                fallback: "View Presentation"
+            });
+        $('.glyphicon glyphicon-facetime-video').tipsy(
+            {   
+                gravity: 'w',
+                fallback: "View Video Walkthrough"
             });
         
     </script>
@@ -449,9 +464,84 @@
     }
 };
     
-    PDFObject.embed("Documentation/Readme.pdf", "#readme", options);</script>  
+    PDFObject.embed("documentation/Readme.pdf", "#readme", options);</script>  
 <style>
 .pdfobject-container { height: 80vh; }
 </style>
+    
+    
+    <div class="modal fade" id="pt" tabindex="-1" role="dialog" aria-labelledby="ProjectTitle" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="col-lg-11">
+        <h1 class="modal-title" id="ProjectTitle">City Recommendation in the USA using Yahoo Flickr Creative Commons 100M Dataset</h1>
+        <h4>by Anant Jain, Ahmet Salih Gundogdu</h4>
+        <h6><b>DS 5500 Fall 2018 --- Prof. Cody Dunne, Northeastern University</b></h6>
+        </div>
+        
+        <button type="button" class="close col-lg-1" data-dismiss="modal" aria-label="Close">
+            <h3><span aria-hidden="true">&times;</span></h3>
+        </button>
+      </div>
+      <div class="modal-body" id='presentation'>
+          <a href="https://github.com/asgundogdu/locationRec"><img class="git" style="height: 40px;"
+         src="images/Octocat.png"
+         alt="https://github.com/asgundogdu/locationRec" /></a>
+          <a href="https://github.com/asgundogdu/locationRec"><img class="git" style="height: 30px;"
+         src="images/GitHub_Logo.png"
+         alt="https://github.com/asgundogdu/locationRec" /></a>
+          <br>
+
+      </div>
+      <div class="modal-footer"></div>
+    </div>
+  </div>
+</div>
+
+<script src="scripts/libraries/pdfobject.js"></script>
+<script>
+    var options = {
+    pdfOpenParams: {
+        view: 'FitH'
+    }
+};
+    
+    PDFObject.embed("documentation/Presentation.pdf", "#presentation", options);
+</script>  
+    
+    
+<div class="modal fade" id="vw" tabindex="-1" role="dialog" aria-labelledby="ProjectTitle" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="col-lg-11">
+        <h1 class="modal-title" id="ProjectTitle">City Recommendation in the USA using Yahoo Flickr Creative Commons 100M Dataset</h1>
+        <h4>by Anant Jain, Ahmet Salih Gundogdu</h4>
+        <h6><b>DS 5500 Fall 2018 --- Prof. Cody Dunne, Northeastern University</b></h6>
+        </div>
+        
+        <button type="button" class="close col-lg-1" data-dismiss="modal" aria-label="Close">
+            <h3><span aria-hidden="true">&times;</span></h3>
+        </button>
+      </div>
+      <div class="modal-body" id='video'>
+          <a href="https://github.com/asgundogdu/locationRec"><img class="git" style="height: 40px;"
+         src="images/Octocat.png"
+         alt="https://github.com/asgundogdu/locationRec" /></a>
+          <a href="https://github.com/asgundogdu/locationRec"><img class="git" style="height: 30px;"
+         src="images/GitHub_Logo.png"
+         alt="https://github.com/asgundogdu/locationRec" /></a>
+          <br>
+          <video controls="" height="400" width="600">
+            <source src="/documentation/Video Walkthrough.mp4"/>
+        </video>
+
+      </div>
+      <div class="modal-footer"></div>
+    </div>
+  </div>
+</div>
+ 
 </html>
 
