@@ -43,7 +43,7 @@ The above visualization shows an area chart which encodes date data on the x axi
 
 Fun-fact: As we can see in the chart below, before 2010, the difference in the number of check-ins between that of New York and San Francisco isn't that much. But, after 2010, We see New York almost doubled it's count of check-ins and became the sole most popular city in the US.
 
-![alt text](https://github.com/asgundogdu/locationRec/blob/master/documentation/Readme/Image_003.jpg)
+![alt text](https://github.com/asgundogdu/locationRec/blob/master/documentation/Readme/Image_003.png)
 
 ## Task Analysis:
 
@@ -95,13 +95,13 @@ The biggest changes were made to the Evaluation and Results visualizations. We d
 
 Preliminary Sketches:
 
-![alt text](https://github.com/asgundogdu/locationRec/blob/master/documentation/Readme/Image_004.jpg)
-![alt text](https://github.com/asgundogdu/locationRec/blob/master/documentation/Readme/Image_005.jpg)
+![alt text](https://github.com/asgundogdu/locationRec/blob/master/documentation/Readme/Image_004.png)
+![alt text](https://github.com/asgundogdu/locationRec/blob/master/documentation/Readme/Image_005.png)
 
 Digital Sketches:
 
-![alt text](https://github.com/asgundogdu/locationRec/blob/master/documentation/Readme/Image_006.jpg)
-![alt text](https://github.com/asgundogdu/locationRec/blob/master/documentation/Readme/Image_007.jpg)
+![alt text](https://github.com/asgundogdu/locationRec/blob/master/documentation/Readme/Image_006.png)
+![alt text](https://github.com/asgundogdu/locationRec/blob/master/documentation/Readme/Image_007.png)
 
 ## Final Visualization:
 
@@ -116,7 +116,7 @@ We’ll go by each section and discuss its purpose, design justification and pac
 
 Exploratory Data Analysis:
 
-![alt text](https://github.com/asgundogdu/locationRec/blob/master/documentation/Readme/Image_008.jpg)
+![alt text](https://github.com/asgundogdu/locationRec/blob/master/documentation/Readme/Image_008.png)
 
 Exploratory Data Analysis is the first tab on the UI.
 The main panel shows an interactive leaflet map with hex-binned layers. The position of the hex-bins ideally encodes location of the aggregated check-ins at each zoom level of the map. The color of the hex-bins encodes the number of check-ins in that aggregated region. A Green-Blue color scale from ColorBrewer is used. A user can investigate the number of check-ins contained in each hexagon by hovering the mouse pointer over the hexagon (this is going to show a tipsy tooltip).
@@ -125,7 +125,7 @@ The side-bar panel consists of an area chart and a bar chart made using D3. The 
 
 Hyperparameter Testing & Model Selection
 
-![alt text](https://github.com/asgundogdu/locationRec/blob/master/documentation/Readme/Image_009.jpg)
+![alt text](https://github.com/asgundogdu/locationRec/blob/master/documentation/Readme/Image_009.png)
 
 Hyperparameter Testing & Model Selection is the second tab on the UI.
 
@@ -133,13 +133,13 @@ The main panel is divided into two parts. First shows a multi-columned line char
 
 The side-bar panel has bootstrap and multi-select input elements so that the user can input his/her’s set of hyperparameters and models to explore and assess. Once the user hits the train button, the page makes a request to the flask server to get the data for the visualizations and show the best set of hyperparameters for entered inputs in the sidebar. The page fires a request to the get the data for default parameters when the user first switches to the tab.
 
-![alt text](https://github.com/asgundogdu/locationRec/blob/master/documentation/Readme/Image_010.jpg)
+![alt text](https://github.com/asgundogdu/locationRec/blob/master/documentation/Readme/Image_010.png)
 
 It might take some time for the page to receive the data from the server therefore a user is going to see the UX gif in the main panel. A loading hexagonal gif means the page has fired up a query to the server and is fetching the data for the visualization.
 
 Evaluation and Results
 
-![alt text](https://github.com/asgundogdu/locationRec/blob/master/documentation/Readme/Image_011.jpg)
+![alt text](https://github.com/asgundogdu/locationRec/blob/master/documentation/Readme/Image_011.png)
 
 Lastly, we have Evaluation and Results on the third tab of the UI.
 
