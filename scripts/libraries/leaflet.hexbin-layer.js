@@ -100,7 +100,6 @@ L.HexLayer = L.Class.extend({
             }, this),
             bins = layout(data),
             hexagons = container.selectAll(".hexagon").data(bins);
-
         // Create hexagon elements when data is added.
         var path = hexagons.enter().append("path").attr("class", "hexagon");
         this._applyStyle(path);

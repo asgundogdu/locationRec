@@ -3,6 +3,7 @@
                   classes = 9,
                   scheme = colorbrewer["GnBu"][classes],
                   container = L.DomUtil.get('hex'),
+                  flag = 0;
                   map = L.map(container).setView([40, -96], 4);
 
 
@@ -320,17 +321,65 @@
                         .attr("transform", "translate(20,20)")
                         .call(legend);
                   
+//                      map.on('zoomend', function() {
+//                          bounds = map.getBounds()
+//                        let bfeatures=collection.features.filter(function(i){
+//                            return (i.properties.latitude>=bounds._southWest.lat && i.properties.latitude <= bounds._northEast.lat) && (i.properties.longitude>=bounds._southWest.lng && i.properties.longitude <= bounds._northEast.lng);         
+//                        });
+////                            console.log(bfeatures.length);
+//                        });
+                  
               });
   
               function hex_style(hexagons) {
-                  if (!(max && scale)) {
-                      max = d3.max(hexagons.data(), function (d) { return d.length; });
+//                  if (!(max && scale)) {
+                      max = d3.max(hexagons.data(), function (d) {
+                          return d.length; });
                       scale = d3.scale.quantize()
                               .domain([0, max])
                               .range(d3.range(classes));
-                  }
+//                  }
                   
+                  
+                if(flag==1) {  d3.select("#legend").selectAll("svg").remove();
+                  
+                  var svg = d3.select("#legend")
+                       .append("svg")
+                       .attr("height", d3.select("#legend").node().getBoundingClientRect().height)
+                       .attr("width", d3.select("#legend").node().getBoundingClientRect().width);
 
+                  var colorscale = d3.scale.quantize()
+                                        .domain([1,max])
+                                        .range(colorbrewer.GnBu[9]);
+                    
+                  function NGon(x, y, N, side, angle) {
+                        var path = "",
+                            c, temp_x, temp_y, theta;
+
+                        for (c = 0; c <= N; c += 1) {
+                            theta = (c + 0.5) / N * 2 * Math.PI;
+                            temp_x = x + Math.cos(theta) * side;
+                            temp_y = y + Math.sin(theta) * side;
+                            path += (c === 0 ? "M" : "L") + temp_x + "," + temp_y;
+                        }
+                        return path;
+                    }
+
+                    var legend = d3.legend.color()
+                                      .scale(colorscale)
+                                      .shape("path", NGon(0, 0, 6, 10))
+                                      .orient("vertical")
+                                      .labelFormat(d3.format(".0f"))
+                                      .labelOffset(10)
+                                      .title("Number of Check-ins");
+
+                    svg.append("g")
+                        .attr("class", "legend")
+                        .attr("transform", "translate(20,20)")
+                        .call(legend);}
+                  
+                  flag=1;
+                  
                   hexagons
                       .attr("stroke", scheme[classes - 1])
                       .attr("fill", function (d) {
@@ -360,5 +409,7 @@
                 });
                   
               }
+    
+
    
           }());

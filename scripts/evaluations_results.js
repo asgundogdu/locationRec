@@ -24,7 +24,7 @@ var get_data2 = function(pval, mval, ldval, user, callback) {
         console.log(url);
             
           $.getJSON(server+url).then(function (data) {
-                r_data = JSON.parse(JSON.stringify(data));
+                r_data = JSON.parse(JSON.strinpngy(data));
                 callback(r_data);
             });  
     }   
@@ -98,33 +98,39 @@ var update2 = function() {
 //                    console.log(atowns, alats, alons); 
                         
                     var rIcon = L.icon({
-                        iconUrl: 'images/r.gif',
-                        iconSize: [40,40]
+                        iconUrl: 'images/r.png',
+                        iconSize: [20,30]
                       });
                         
                     var aIcon = L.icon({
-                        iconUrl: 'images/a.gif',
-                        iconSize: [40,40]
+                        iconUrl: 'images/a.png',
+                        iconSize: [20,30]
                       });
                         
                     for(var r=0; r < recs.length; r++)  {
 //                        console.log([rlats[r], rlons[r]]); 
-                        let marker = L.marker([rlats[r], rlons[r]],{icon: rIcon}).bindPopup(rtowns[r])
-                            .on('mouseover', function (e) {
-                            this.openPopup();
-                            }).on('mouseout', function (e) {
-                                this.closePopup();
-                            }).addTo(rmap);
+                        let marker = L.marker([rlats[r], rlons[r]],{icon: rIcon})
+                        .bindPopup(rtowns[r])
+//                        .on('mouseover', function (e) {
+//                            this.openPopup();
+//                            })
+//                        .on('mouseout', function (e) {
+//                                this.closePopup();
+//                            })
+                        .addTo(rmap);
                     }
                         
                     for(var a=0; a < acts.length; a++)  {
 //                        console.log([alats[a], alons[a]]); 
-                        let marker = L.marker([alats[a], alons[a]],{icon: aIcon}).bindPopup(atowns[a])
-                        .on('mouseover', function (e) {
-                            this.openPopup();
-                            }).on('mouseout', function (e) {
-                                this.closePopup();
-                            }).addTo(rmap);
+                        let marker = L.marker([alats[a], alons[a]],{icon: aIcon})
+                        .bindPopup(atowns[a])
+//                        .on('mouseover', function (e) {
+//                            this.openPopup();
+//                            })
+//                        .on('mouseout', function (e) {
+//                                this.closePopup();
+//                            })
+                        .addTo(rmap);
                     }  
                         
                     $('#loader3').hide();
@@ -137,17 +143,17 @@ var update2 = function() {
 
                     svg.append("svg:image")
                         .attr('x', 8)
-                        .attr('y', 10)
+                        .attr('y', 15)
                         .attr('width', 40)
-                        .attr('height', 40)
-                        .attr("xlink:href", 'images/a.gif')
+                        .attr('height', 30)
+                        .attr("xlink:href", 'images/a.png')
         
                     svg.append("svg:image")
                         .attr('x', 8)
-                        .attr('y', 40)
+                        .attr('y', 48)
                         .attr('width', 40)
-                        .attr('height', 40)
-                        .attr("xlink:href", 'images/r.gif')
+                        .attr('height', 30)
+                        .attr("xlink:href", 'images/r.png')
         
                     svg.append("text")
                         .attr('x', 48)

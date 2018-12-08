@@ -403,17 +403,17 @@
         $("#legend").draggable();
         $("#rlegend").draggable();
         
-        $('.glyphicon glyphicon-file').tipsy(
+        $('.glyphicon-file').tipsy(
             {   
                 gravity: 'w',
                 fallback: "View README"
             });
-        $('.glyphicon glyphicon-film').tipsy(
+        $('.glyphicon-film').tipsy(
             {   
                 gravity: 'w',
                 fallback: "View Presentation"
             });
-        $('.glyphicon glyphicon-facetime-video').tipsy(
+        $('.glyphicon-facetime-video').tipsy(
             {   
                 gravity: 'w',
                 fallback: "View Video Walkthrough"
@@ -464,7 +464,16 @@
     }
 };
     
-    PDFObject.embed("documentation/Readme.pdf", "#readme", options);</script>  
+    PDFObject.embed("documentation/Readme.pdf", "#readme", options);
+    
+    $(function(){
+    $('#vw').modal({
+        show: false
+    }).on('hidden.bs.modal', function(){
+        $(this).find('video')[0].pause();
+    });
+});
+</script>  
 <style>
 .pdfobject-container { height: 80vh; }
 </style>
@@ -543,5 +552,7 @@
   </div>
 </div>
  
+    
+    
 </html>
 
