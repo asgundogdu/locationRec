@@ -1,35 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="utf-8">
     <title>YFCC100M</title>
-      
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
-    
-    <link href="scripts/libraries/multiple-select.css" rel="stylesheet"/>
-      
-    <link href="scripts/libraries/leaflet.css" rel="stylesheet" /> 
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+
+    <link href="scripts/libraries/multiple-select.css" rel="stylesheet" />
+
+    <link href="scripts/libraries/leaflet.css" rel="stylesheet" />
     <script src="scripts/libraries/leaflet-src.js"></script>
-    
+
     <script src="https://d3js.org/d3.v3.min.js"></script>
-      
+
     <script src="https://d3js.org/d3-hexbin.v0.2.min.js"></script>
-    <script src = "scripts/libraries/d3-legend.js"></script> <!--modified to add swatch stroke-->
+    <script src="scripts/libraries/d3-legend.js"></script>
+    <!--modified to add swatch stroke-->
     <script src="scripts/libraries/colorbrewer.js"></script>
     <script src="scripts/libraries/leaflet.hexbin-layer.js"></script>
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-      
-<!--
-    <script> 
-    $(function(){
-      $("#readme").load("../Documentation/Readme.html"); 
-    });
-      </script>
--->
 
-    
-      <style>
+    <style>
         .hexagon, .swatch { 
             opacity: 0.7; 
           }
@@ -141,64 +134,64 @@
           }
 
       </style>
-  </head>
-    
-    
-<!--   -----------------------------------------------   -->
-    <body>
+</head>
+
+
+<body>
+<!-- Main Panel -->
     <div class="col-lg-8" style="padding-top: 10px;">
         <div class="nav nav-tabs nav-justified">
             <ul class="nav nav-tabs nav-justified" data-tabs="tabs">
-                <li class="active"><a href="#eda-m" data-toggle="tab" onclick="showcontent('eda')" >Exploratory Data Analysis</a></li>
+                <li class="active"><a href="#eda-m" data-toggle="tab" onclick="showcontent('eda')">Exploratory Data Analysis</a></li>
                 <li><a href="#ms-m" data-toggle="tab" onclick="showcontent('ms')">Hyperparameter &amp; Model Selection</a></li>
-                <li><a href="#er-m" data-toggle="tab" onclick="showcontent('er')">Evaluation &amp;  Results</a></li>
+                <li><a href="#er-m" data-toggle="tab" onclick="showcontent('er')">Evaluation &amp; Results</a></li>
             </ul>
-<!--   -----------------------------------------------   -->       
-            <div class="tab-content">   
+            <!--   -----------------------------------------------   -->
+            <div class="tab-content">
                 <div class="tab-pane active" id="eda-m">
                     <div class="loading" id="loader1"></div>
                     <div id="legend"></div>
                     <div id='hex' data-source="data/eda-data.geojson" style="height: 85vh; margin-top: 10px"></div>
                 </div>
-<!--   -----------------------------------------------   -->
+                <!--   -----------------------------------------------   -->
                 <div class="tab-pane" id="ms-m">
                     <div class="loading" id="loader2"></div>
                     <div id="ht" style="height: 40vh; width:100%;">
-                    <h4 style="font-family: serif; margin-bottom: 0; padding-top: 10px">Hyperparmeter Testing:</h4>
-                    <hr style="margin-top: 0; margin-bottom: 1px">
-                    <div id="htchart" class="htchart" style="height: 100%"></div>
+                        <h4 style="font-family: serif; margin-bottom: 0; padding-top: 10px">Hyperparmeter Testing:</h4>
+                        <hr style="margin-top: 0; margin-bottom: 1px">
+                        <div id="htchart" class="htchart" style="height: 100%"></div>
                     </div>
 
                     <div style="height: 40vh; width:100%; margin-top: 4vh">
-                    <h4 style="font-family: serif; margin-bottom: 0; padding-top: 10px">Model Selection:</h4>
-                    <hr style="margin-top: 0; margin-bottom: 1px">
-                    <div id="mschart" class="mschart" style="height: 100%"></div>
-                    <img id="mslegend" src="images/msl.PNG">
+                        <h4 style="font-family: serif; margin-bottom: 0; padding-top: 10px">Model Selection:</h4>
+                        <hr style="margin-top: 0; margin-bottom: 1px">
+                        <div id="mschart" class="mschart" style="height: 100%"></div>
+                        <img id="mslegend" src="images/msl.PNG">
                     </div>
                 </div>
-<!--   -----------------------------------------------   -->
+                <!--   -----------------------------------------------   -->
 
                 <div class="tab-pane" id="er-m">
                     <div class="loading" id="loader3"></div>
-                    <div id="rlegend">                  
+                    <div id="rlegend">
                     </div>
                     <div id='results' style="height: 85vh; margin-top: 10px"></div>
                 </div>
-<!--   -----------------------------------------------   -->   
+                <!--   -----------------------------------------------   -->
             </div>
         </div>
     </div>
-      
+<!-- Side Panel -->
     <div class="col-lg-4" style="-moz-box-shadow: 0 0 10px 0px #999; -webkit-box-shadow: 0 0 10px 0px #999; height:100vh;">
-        
+
         <div id="eda-s">
             <h3>City Recommendation in the USA using Yahoo Flickr Creative Commons 100M Dataset</h3>
             <h4> by Anant Jain, Ahmet Salih Gundogdu</h4>
-            <h6><b>Objective: </b> Use data based visualizations to explore, assess and evaluate multiple SVD algorithms for the purposes of identifying anomalies, generating trust and providing the best recommendation for cities to visit in the USA. <br><br>This project was submitted as the final deliverable to the mandatory project for the course DS 5500, taught in Fall 2018 at Northeastern University under the guidance of Prof. Cody Dunne and Ansel MacLaughlin. 
+            <h6><b>Objective: </b> Use data based visualizations to explore, assess and evaluate multiple SVD algorithms for the purposes of identifying anomalies, generating trust and providing the best recommendation for cities to visit in the USA. <br><br>This project was submitted as the final deliverable to the mandatory project for the course DS 5500, taught in Fall 2018 at Northeastern University under the guidance of Prof. Cody Dunne and Ansel MacLaughlin.
                 <a data-toggle="modal" data-target="#rm"><span class="glyphicon glyphicon-file" aria-hidden="true"></span></a>&nbsp;
-                
+
                 <a data-toggle="modal" data-target="#pt"><span class="glyphicon glyphicon-film" aria-hidden="true"></span></a>&nbsp;
-                
+
                 <a data-toggle="modal" data-target="#vw"><span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span></a></h6>
             <h4 style="font-family: serif; margin-bottom: 0; padding-top: 4px">Date Range:</h4>
             <hr style="margin-top: 0; margin-bottom: 1px">
@@ -207,17 +200,17 @@
             <hr style="margin-top: 0; margin-bottom: 1px">
             <svg class="citychart" style="height: 30vh; width:100%; margin: 10px 0px -30px 0px;"></svg>
         </div>
-<!--   -----------------------------------------------   -->
+        <!--   -----------------------------------------------   -->
         <div id="ms-s">
-            
+
             <h4 style="font-family: serif; margin-bottom: 0; padding-top: 10px">Hyperparameter &amp; Model Selection:</h4>
-                <h6>  We give the user the freedom to assess and visualize different adaptations of SVD algorithm on his/her selection of hyperparameters.
-                    We have the following options for Hyperparameter Testing and Model Selection: <br><br>
-                    <b>Preprocessing:</b> 1.Numeric: Counts the number of check-ins for each city per user and creates a numeric label in domain [0, inf). 2.Binary: Labels User-Location pairs as 1 if user has checked-in in that city, otherwise 0.
-                    <b>Models:</b> 1.SVD_explicit: Use Singular Value Decomposition to extract user and location features and approximate the missing user check-ins by matrix factorization. 2.SVD_implicit: Use Singular Value Decomposition to extract user and location features and then apply Alternating Least Squares method to get an optimal fit for missing points. <b>Latent Dimensions:</b> Denotes the number of dimensions/features to extract for each user and location. <b>Metric:</b> Metric to assess the hyperparameters on.
-                </h6>
+            <h6> We give the user the freedom to assess and visualize different adaptations of SVD algorithm on his/her selection of hyperparameters.
+                We have the following options for Hyperparameter Testing and Model Selection: <br><br>
+                <b>Preprocessing:</b> 1.Numeric: Counts the number of check-ins for each city per user and creates a numeric label in domain [0, inf). 2.Binary: Labels User-Location pairs as 1 if user has checked-in in that city, otherwise 0.
+                <b>Models:</b> 1.SVD_explicit: Use Singular Value Decomposition to extract user and location features and approximate the missing user check-ins by matrix factorization. 2.SVD_implicit: Use Singular Value Decomposition to extract user and location features and then apply Alternating Least Squares method to get an optimal fit for missing points. <b>Latent Dimensions:</b> Denotes the number of dimensions/features to extract for each user and location. <b>Metric:</b> Metric to assess the hyperparameters on.
+            </h6>
             <h4 style="font-family: serif; margin-bottom: 0; padding-top: 10px">Experimentation Parameters:</h4>
-                <hr style="margin-top: 0; margin-bottom: 1px">
+            <hr style="margin-top: 0; margin-bottom: 1px">
             <form action="" method="post" enctype="multipart/form-data" id="form1">
                 <li class="list-group-item row">
                     <label class="col-lg-4">Preprocessing:</label>
@@ -227,12 +220,12 @@
                     </select>
                 </li>
                 <li class="list-group-item row">
-                <label class="col-lg-4">Model:</label>
-                <select name="model" id="model" class="multiple" multiple="multiple" required>
-                    <option value="SVD_explicit" selected>SVD_explicit</option>
-                    <option value="SVD_implicit">SVD_implicit</option>
-                </select>
-                
+                    <label class="col-lg-4">Model:</label>
+                    <select name="model" id="model" class="multiple" multiple="multiple" required>
+                        <option value="SVD_explicit" selected>SVD_explicit</option>
+                        <option value="SVD_implicit">SVD_implicit</option>
+                    </select>
+
                 </li>
 
                 <li class="list-group-item row">
@@ -260,34 +253,34 @@
                         <option value="recall_val">Recall-Validation Set</option>
                     </select>
                 </li>
-                
-                 <li class="list-group-item row">
-                 <input type="submit" value="Train" id="submit" class="btn btn-primary col-lg-4">
+
+                <li class="list-group-item row">
+                    <input type="submit" value="Train" id="submit" class="btn btn-primary col-lg-4">
                 </li>
             </form>
             <h4 style="font-family: serif; margin-bottom: 0; padding-top: 10px">Best Performing Model &amp; Parameters:</h4>
             <div id="best">
-            <hr style="margin-top: 0; margin-bottom: 1px">
-            <li class="list-group-item row">
-                <label class="col-lg-4">Preprocessing: </label>
-                <p id="bpreprocessing"></p>
-            </li>
-            <li class="list-group-item row">
-                <label class="col-lg-4">Model: </label>
-                <p id="bmodel"></p>
-            </li>
-            <li class="list-group-item row">
-                <label class="col-lg-4">Latent Dimentions: </label>
-                <p id="bld"></p>
-            </li>
+                <hr style="margin-top: 0; margin-bottom: 1px">
+                <li class="list-group-item row">
+                    <label class="col-lg-4">Preprocessing: </label>
+                    <p id="bpreprocessing"></p>
+                </li>
+                <li class="list-group-item row">
+                    <label class="col-lg-4">Model: </label>
+                    <p id="bmodel"></p>
+                </li>
+                <li class="list-group-item row">
+                    <label class="col-lg-4">Latent Dimentions: </label>
+                    <p id="bld"></p>
+                </li>
             </div>
-            
+
         </div>
-<!--   -----------------------------------------------   -->
+        <!--   -----------------------------------------------   -->
         <div id="er-s">
-            <h4 style="font-family: serif; margin-bottom: 0; padding-top: 10px">Evaluation &amp;  Results:</h4>
-                <h6>  Select the parameters for which you want your recommendations to be based on. The user gets randomly selected from the dataset for test purposes. 
-                </h6>
+            <h4 style="font-family: serif; margin-bottom: 0; padding-top: 10px">Evaluation &amp; Results:</h4>
+            <h6> Select the parameters for which you want your recommendations to be based on. The user gets randomly selected from the dataset for test purposes.
+            </h6>
             <form action="" method="post" enctype="multipart/form-data" id="form2">
                 <h4 style="font-family: serif; margin-bottom: 0; padding-top: 10px">Model:</h4>
                 <hr style="margin-top: 0; margin-bottom: 1px">
@@ -301,14 +294,14 @@
                 </li>
 
                 <li class="list-group-item row">
-                <label class="col-lg-4">Model:</label>
-                <select name="fmodel" id="fmodel" class="single" multiple="multiple" required>
-                    <option value="SVD_explicit" selected>SVD_explicit</option>
-                    <option value="SVD_implicit">SVD_implicit</option>
-                </select>
-                
+                    <label class="col-lg-4">Model:</label>
+                    <select name="fmodel" id="fmodel" class="single" multiple="multiple" required>
+                        <option value="SVD_explicit" selected>SVD_explicit</option>
+                        <option value="SVD_implicit">SVD_implicit</option>
+                    </select>
+
                 </li>
-                
+
                 <li class="list-group-item row">
                     <label class="col-lg-4">Latent Dimensions:</label>
                     <select name="fld" id="fld" class="single" multiple="multiple" required>
@@ -325,16 +318,16 @@
                     </select>
                 </li>
                 <li class="list-group-item row">
-                 <input type="submit" value="Train & Get Recommendations" id="fsubmit" class="btn btn-primary col-lg-8" style="margin-left: 10px;">
+                    <input type="submit" value="Train & Get Recommendations" id="fsubmit" class="btn btn-primary col-lg-8" style="margin-left: 10px;">
                 </li>
             </form>
             <hr>
             <h4 style="font-family: serif; margin-bottom: 0; padding-top: 10px">Ranked List of Results:</h4>
-                <hr style="margin-top: 0; margin-bottom: 1px">
+            <hr style="margin-top: 0; margin-bottom: 1px">
 
             <li class="list-group-item row">
-              <label class="col-lg-6">Recommendations for: </label>
-              <p id="user"></p>
+                <label class="col-lg-6">Recommendations for: </label>
+                <p id="user"></p>
             </li>
 
             <div id="rl" class="row">
@@ -342,20 +335,20 @@
                 <ul id="rl2" class="col-lg-6"></ul>
             </div>
         </div>
-        
+
     </div>
 </body>
 <!--   -----------------------------------------------   -->
-    
-    
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <script src="scripts/libraries/multiple-select.js"></script>
-    <script type="text/javascript" src="scripts/libraries/jquery.tipsy.js"></script>
-    <link href="scripts/libraries/tipsy.css" rel="stylesheet" type="text/css" />
-    
-    <script>
-        $('.multiple').multipleSelect();
+
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script src="scripts/libraries/multiple-select.js"></script>
+<script type="text/javascript" src="scripts/libraries/jquery.tipsy.js"></script>
+<link href="scripts/libraries/tipsy.css" rel="stylesheet" type="text/css" />
+
+<script>
+    $('.multiple').multipleSelect();
 
         $(".single").multipleSelect({
             single: true
@@ -367,8 +360,8 @@
         });
         
     </script>
-    
-    <script>
+
+<script>
     var eda = document.getElementById("eda-s");
     var ms = document.getElementById("ms-s");
     var er = document.getElementById("er-s");
@@ -398,9 +391,9 @@
         
     } 
     </script>
-    
-    <script>
-        $("#legend").draggable();
+
+<script>
+    $("#legend").draggable();
         $("#rlegend").draggable();
         
         $('.glyphicon-file').tipsy(
@@ -420,40 +413,36 @@
             });
         
     </script>
-     
-    <script src="scripts/exploratory_data_analysis.js"></script>
-    <script src="scripts/model_selection.js"></script>
-    <script src="scripts/evaluations_results.js"></script>
-    
- 
-    
-<div class="modal fade" id="rm" tabindex="-1" role="dialog" aria-labelledby="ProjectTitle" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <div class="col-lg-11">
-        <h1 class="modal-title" id="ProjectTitle">City Recommendation in the USA using Yahoo Flickr Creative Commons 100M Dataset</h1>
-        <h4>by Anant Jain, Ahmet Salih Gundogdu</h4>
-        <h6><b>DS 5500 Fall 2018 --- Prof. Cody Dunne, Northeastern University</b></h6>
-        </div>
-        
-        <button type="button" class="close col-lg-1" data-dismiss="modal" aria-label="Close">
-            <h3><span aria-hidden="true">&times;</span></h3>
-        </button>
-      </div>
-      <div class="modal-body" id='readme'>
-          <a href="https://github.com/asgundogdu/locationRec"><img class="git" style="height: 40px;"
-         src="images/Octocat.png"
-         alt="https://github.com/asgundogdu/locationRec" /></a>
-          <a href="https://github.com/asgundogdu/locationRec"><img class="git" style="height: 30px;"
-         src="images/GitHub_Logo.png"
-         alt="https://github.com/asgundogdu/locationRec" /></a>
-          <br>
 
-      </div>
-      <div class="modal-footer"></div>
+<script src="scripts/exploratory_data_analysis.js"></script>
+<script src="scripts/model_selection.js"></script>
+<script src="scripts/evaluations_results.js"></script>
+
+
+<!-- Modals -->
+<div class="modal fade" id="rm" tabindex="-1" role="dialog" aria-labelledby="ProjectTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="col-lg-11">
+                    <h1 class="modal-title" id="ProjectTitle">City Recommendation in the USA using Yahoo Flickr Creative Commons 100M Dataset</h1>
+                    <h4>by Anant Jain, Ahmet Salih Gundogdu</h4>
+                    <h6><b>DS 5500 Fall 2018 --- Prof. Cody Dunne, Northeastern University</b></h6>
+                </div>
+
+                <button type="button" class="close col-lg-1" data-dismiss="modal" aria-label="Close">
+                    <h3><span aria-hidden="true">&times;</span></h3>
+                </button>
+            </div>
+            <div class="modal-body" id='readme'>
+                <a href="https://github.com/antujn/YFCC-USA-Town-Recommendation"><img class="git" style="height: 40px;" src="images/Octocat.png" alt="https://github.com/antujn/YFCC-USA-Town-Recommendation" /></a>
+                <a href="https://antujn.github.io/YFCC-USA-Town-Recommendation/"><img class="git" style="height: 30px;" src="images/GitHub_Logo.png" alt="https://antujn.github.io/YFCC-USA-Town-Recommendation/" /></a>
+                <br>
+
+            </div>
+            <div class="modal-footer"></div>
+        </div>
     </div>
-  </div>
 </div>
 
 <script src="scripts/libraries/pdfobject.js"></script>
@@ -473,39 +462,35 @@
         $(this).find('video')[0].pause();
     });
 });
-</script>  
+</script>
 <style>
-.pdfobject-container { height: 80vh; }
+    .pdfobject-container { height: 80vh; }
 </style>
-    
-    
-    <div class="modal fade" id="pt" tabindex="-1" role="dialog" aria-labelledby="ProjectTitle" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <div class="col-lg-11">
-        <h1 class="modal-title" id="ProjectTitle">City Recommendation in the USA using Yahoo Flickr Creative Commons 100M Dataset</h1>
-        <h4>by Anant Jain, Ahmet Salih Gundogdu</h4>
-        <h6><b>DS 5500 Fall 2018 --- Prof. Cody Dunne, Northeastern University</b></h6>
-        </div>
-        
-        <button type="button" class="close col-lg-1" data-dismiss="modal" aria-label="Close">
-            <h3><span aria-hidden="true">&times;</span></h3>
-        </button>
-      </div>
-      <div class="modal-body" id='presentation'>
-          <a href="https://github.com/asgundogdu/locationRec"><img class="git" style="height: 40px;"
-         src="images/Octocat.png"
-         alt="https://github.com/asgundogdu/locationRec" /></a>
-          <a href="https://github.com/asgundogdu/locationRec"><img class="git" style="height: 30px;"
-         src="images/GitHub_Logo.png"
-         alt="https://github.com/asgundogdu/locationRec" /></a>
-          <br>
 
-      </div>
-      <div class="modal-footer"></div>
+
+<div class="modal fade" id="pt" tabindex="-1" role="dialog" aria-labelledby="ProjectTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="col-lg-11">
+                    <h1 class="modal-title" id="ProjectTitle">City Recommendation in the USA using Yahoo Flickr Creative Commons 100M Dataset</h1>
+                    <h4>by Anant Jain, Ahmet Salih Gundogdu</h4>
+                    <h6><b>DS 5500 Fall 2018 --- Prof. Cody Dunne, Northeastern University</b></h6>
+                </div>
+
+                <button type="button" class="close col-lg-1" data-dismiss="modal" aria-label="Close">
+                    <h3><span aria-hidden="true">&times;</span></h3>
+                </button>
+            </div>
+            <div class="modal-body" id='presentation'>
+                <a href="https://github.com/antujn/YFCC-USA-Town-Recommendation"><img class="git" style="height: 40px;" src="images/Octocat.png" alt="https://github.com/antujn/YFCC-USA-Town-Recommendation" /></a>
+                <a href="https://antujn.github.io/YFCC-USA-Town-Recommendation/"><img class="git" style="height: 30px;" src="images/GitHub_Logo.png" alt="https://antujn.github.io/YFCC-USA-Town-Recommendation/" /></a>
+                <br>
+
+            </div>
+            <div class="modal-footer"></div>
+        </div>
     </div>
-  </div>
 </div>
 
 <script src="scripts/libraries/pdfobject.js"></script>
@@ -517,42 +502,37 @@
 };
     
     PDFObject.embed("documentation/Presentation.pdf", "#presentation", options);
-</script>  
-    
-    
+</script>
+
+
 <div class="modal fade" id="vw" tabindex="-1" role="dialog" aria-labelledby="ProjectTitle" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <div class="col-lg-11">
-        <h1 class="modal-title" id="ProjectTitle">City Recommendation in the USA using Yahoo Flickr Creative Commons 100M Dataset</h1>
-        <h4>by Anant Jain, Ahmet Salih Gundogdu</h4>
-        <h6><b>DS 5500 Fall 2018 --- Prof. Cody Dunne, Northeastern University</b></h6>
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="col-lg-11">
+                    <h1 class="modal-title" id="ProjectTitle">City Recommendation in the USA using Yahoo Flickr Creative Commons 100M Dataset</h1>
+                    <h4>by Anant Jain, Ahmet Salih Gundogdu</h4>
+                    <h6><b>DS 5500 Fall 2018 --- Prof. Cody Dunne, Northeastern University</b></h6>
+                </div>
+
+                <button type="button" class="close col-lg-1" data-dismiss="modal" aria-label="Close">
+                    <h3><span aria-hidden="true">&times;</span></h3>
+                </button>
+            </div>
+            <div class="modal-body" id='video'>
+                <a href="https://github.com/antujn/YFCC-USA-Town-Recommendation"><img class="git" style="height: 40px;" src="images/Octocat.png" alt="https://github.com/antujn/YFCC-USA-Town-Recommendation" /></a>
+                <a href="https://antujn.github.io/YFCC-USA-Town-Recommendation/"><img class="git" style="height: 30px;" src="images/GitHub_Logo.png" alt="https://antujn.github.io/YFCC-USA-Town-Recommendation/" /></a>
+                <br>
+                <video controls="" height="400" width="600">
+                    <source src="documentation/Video Walkthrough.mp4" />
+                </video>
+
+            </div>
+            <div class="modal-footer"></div>
         </div>
-        
-        <button type="button" class="close col-lg-1" data-dismiss="modal" aria-label="Close">
-            <h3><span aria-hidden="true">&times;</span></h3>
-        </button>
-      </div>
-      <div class="modal-body" id='video'>
-          <a href="https://github.com/asgundogdu/locationRec"><img class="git" style="height: 40px;"
-         src="images/Octocat.png"
-         alt="https://github.com/asgundogdu/locationRec" /></a>
-          <a href="https://github.com/asgundogdu/locationRec"><img class="git" style="height: 30px;"
-         src="images/GitHub_Logo.png"
-         alt="https://github.com/asgundogdu/locationRec" /></a>
-          <br>
-          <video controls="" height="400" width="600">
-            <source src="documentation/Video Walkthrough.mp4"/>
-        </video>
-
-      </div>
-      <div class="modal-footer"></div>
     </div>
-  </div>
 </div>
- 
-    
-    
-</html>
 
+
+
+</html>
