@@ -153,6 +153,26 @@ The overall goal of this project was to utilize the travel check-in data and use
 
 Even though this project was a simple implementation of recommendation systems using Singular Value Decomposition, it can be scaled to integrate much complex deep-learning models designed for the tasks of collaborative filtering (i.e. Auto-Encoders). In addition to integration of complex models, distance-based evaluation techniques, where the results are evaluated on the basis of the gap between predicted recommendations and ground truth, are also suitable for future work.
 
+## Evaluation Plan
+
+In order to implement this designed system into the wild (real-time in real-world), we should perform an evaluation plan to measure the functionality, effectivenesss, efficiency, usability and usefullnesss of the the city recommendation system [source](http://www.wikiviz.org/wiki/Information_Visualization_Evaluation/). 
+
+First all of the evaluations should be offline and as simulations (using streaming existing data, take a look at different time splits for training and test sets.) This will basically enable us to see the model's robustness for the changing data and also it will demonstrate that how frequently we should suppose to retrain the model. All of this offline evaluations should require around 5%-10% of the money we planned to spend on evaluation plan.
+
+After we did 1-3 iterations on the offline evaluation plan, the difficult and expensive part is to deal with wild environment (online testing/beta testing).
+
+There can be 10% of money can be spend on understanding the environment and work practive for this task. First, the targeted users will be data companies who are interested in inferring city recommendations for people who provides their historical locations. In this project, we proved that we can recommend users related/interesting cities that they are likely to visit in future; however it was not proven using other domains such as Instagram, Reddit, FourSquare etc. To test whether the trained model using YFCC100M data set can recommend related/interesting cities for other domain when the other social platform's data is utilized, we can build a controlled test scenerios to evaluate the precision@10 and recall@10 values in this additional datasets. Then, the effectiveness of the product become more evindent and can be regularized if there is need based on the performance in this evaluation setup. Furthermore, this will enable us to understand YFCC100M data's predictive power in other platform.
+
+Also, for evaluating the system response time, we should first invest more on code optimization then evaluate the performance using different kind of devices (mobile, PC, etc.) and locations all over the world which can overall requires %10 of money that we hold for the evaluation task.
+
+To understand visual reasoning, we want to quantitatively measure users engagement within our website. To do this we can apply A/B testing (Controlled Experiment [Munzer]) for N number of different visualization and monitor their engagements such as lenght of staying in the website, number of clicks and so on (5% of money can be spend). In the end of the evaluation, we can chose the best k (k<<N) number of visualization to be evaluated qualitatively as in below:
+
+To qualitatively evaluate this application we can perform a wide usability tests including 100 people and can design a survey to understand tool's limitations based on the audiences' feedbacks. We can perform this evaluation using [Amazon Mechanical Turk](https://www.mturk.com/) where it is a crowdsourcing Internet marketplace and also enables individuals to publish and get answers for the surveys on specific tasks which can require %5 percentage of the monet can be spend in this evaluation plan. To take this qualitative evaluation further steps, we can use web applications and visualization experts to evaluate this product which will results more expensive than the other usability test (10% of money can be spend)); yet might be really effective to get experts' feedbacks on it. Moreover, this two usability testing tasks should be done in chronological order as after the quantitative evaluation, we apply surveys and expert evaluation. As the MTurk survey will cost less money, we can easily afford to do it multiple times when it was compared to the expert usability test.
+
+We can iterate the whole online evaluation plans twice to meet the user expectations better (will cost almost around the same amount). In this respect, the whole evaluation plan will cost more or less the planned amount in the beginning. 
+
+[slide](https://drive.google.com/file/d/1DMlpMktzxgSolNpbMLVaPc9z6wC6BNzY/view)
+
 ## Github Page
 https://asgundogdu.github.io/locationRec/
 
