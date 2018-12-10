@@ -155,7 +155,7 @@ Even though this project was a simple implementation of recommendation systems u
 
 ## Evaluation Plan
 
-In order to implement this designed system into the wild (real-time in real-world), we should perform an evaluation plan to measure the functionality, effectivenesss, efficiency, usability and usefullnesss of the the city recommendation system [source](http://www.wikiviz.org/wiki/Information_Visualization_Evaluation/). 
+In order to implement this designed system into the wild (real-time in real-world), we should perform an evaluation plan to measure the functionality, effectivenesss, efficiency, usability and usefullnesss of the the city recommendation system [[source](http://www.wikiviz.org/wiki/Information_Visualization_Evaluation/)]. 
 
 First all of the evaluations should be offline and as simulations (using streaming existing data, take a look at different time splits for training and test sets.) This will basically enable us to see the model's robustness for the changing data and also it will demonstrate that how frequently we should suppose to retrain the model. All of this offline evaluations should require around 5%-10% of the money we planned to spend on evaluation plan.
 
@@ -171,7 +171,7 @@ To qualitatively evaluate this application we can perform a wide usability tests
 
 We can iterate the whole online evaluation plans twice to meet the user expectations better (will cost almost around the same amount). In this respect, the whole evaluation plan will cost more or less the planned amount in the beginning. 
 
-[slide](https://drive.google.com/file/d/1DMlpMktzxgSolNpbMLVaPc9z6wC6BNzY/view)
+[[slides](https://drive.google.com/file/d/1DMlpMktzxgSolNpbMLVaPc9z6wC6BNzY/view)]
 
 ## Github Page
 https://asgundogdu.github.io/locationRec/
